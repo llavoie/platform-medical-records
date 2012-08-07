@@ -124,16 +124,29 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.2</version>
         </dependency>
-        <dependency>
-            <groupId>findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+        <!-- Uncomment with findbugs-maven-plugin -->
+        <!--<dependency>-->
+            <!--<groupId>findbugs</groupId>-->
+            <!--<artifactId>annotations</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <modules>
         <!-- Non-OSGI modules -->
+        <module>modules/appointments/appointments-api</module>
+        <module>modules/mrs/mrs-api</module>
+        <module>modules/openmrs/openmrs-api</module>
+        <module>modules/openmrs/openmrs-omod</module>
+        <module>modules/openmrs/openmrs-ws</module>
+
         <!-- OSGI modules -->
+        <module>modules/appointments/appointments-api-bundle</module>
+        <module>modules/mrs/mrs-api-bundle</module>
+        <module>modules/openmrs/openmrs-ws-bundle</module>
+
+        <!-- Packaging modules -->
+
         <!-- Keep this module in last, the module checks if everything is alright after deploy motech on tomcat server -->
     </modules>
 

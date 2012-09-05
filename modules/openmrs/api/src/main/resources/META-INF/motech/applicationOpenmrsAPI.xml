@@ -18,6 +18,7 @@
 
     <tx:annotation-driven/>
 
+
     <bean id="openmrsAPISettings" class="org.motechproject.server.config.SettingsFacade">
         <property name="configFiles">
             <list>

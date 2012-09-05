@@ -8,6 +8,7 @@
     <context:annotation-config />
     <context:component-scan base-package="org.motechproject.openmrs" />
 
+
     <bean id="openmrsWsSettings" class="org.motechproject.server.config.SettingsFacade">
         <property name="configFiles">
             <list>

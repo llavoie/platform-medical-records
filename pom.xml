@@ -162,6 +162,7 @@
         <module>modules/appointments/api</module>
         <module>modules/mrs/api</module>
         <module>modules/openmrs/api</module>
+        <module>modules/openmrs/atomfeed</module>
         <module>modules/openmrs/omod</module>
         <module>modules/openmrs/ws</module>
 
@@ -171,6 +172,7 @@
         <module>modules/appointments/api-bundle</module>
         <module>modules/mrs/api-bundle</module>
         <!--<module>modules/openmrs/api-bundle</module>-->
+        <module>modules/openmrs/atomfeed-bundle</module>
         <module>modules/openmrs/ws-bundle</module>
 
         <!-- Packaging modules -->

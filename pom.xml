@@ -225,8 +225,6 @@
         <module>modules/openmrs/omod</module>
         <module>modules/openmrs/ws</module>
 
-        <!-- Internal OSGI bundles -->
-
         <!-- OSGI modules -->
         <module>modules/appointments/api-bundle</module>
         <module>modules/mrs/api-bundle</module>

@@ -1077,6 +1077,7 @@
         <module>modules/openmrs/omod</module>
         <module>modules/openmrs/ws</module>
 
+
         <!-- OSGI modules -->
         <module>modules/appointments/api-bundle</module>
         <module>modules/mrs/api-bundle</module>

@@ -1,0 +1,113 @@
+{
+    "name": "MRS",
+    "objects": [
+        {
+            "displayName": "Patient",
+            "type": "org.motechproject.mrs.model.MRSPatient",
+            "lookupFields": ["id"],
+            "fields": [
+                {
+                    "displayName": "ID",
+                    "eventKey": "id"
+                },
+                {
+                    "displayName": "FacilityID",
+                    "eventKey": "facility.id"
+                },
+                {
+                    "displayName": "PersonID",
+                    "eventKey": "person.id"
+                }
+            ]
+        },
+        {
+            "displayName": "Person",
+            "type": "org.motechproject.mrs.model.MRSPerson",
+            "lookupFields": ["id"],
+            "fields": [
+                {
+                    "displayName": "ID",
+                    "eventKey": "id"
+                },
+                {
+                    "displayName": "First name",
+                    "eventKey": "firstName"
+                },
+                {
+                    "displayName": "Middle name",
+                    "eventKey": "middleName"
+                },
+                {
+                    "displayName": "Last name",
+                    "eventKey": "lastName"
+                },
+                {
+                    "displayName": "Preferred name",
+                    "eventKey": "preferredName"
+                },
+                {
+                    "displayName": "Address",
+                    "eventKey": "address"
+                },
+                {
+                    "displayName": "Date of birth",
+                    "eventKey": "dateOfBirth",
+                    "type": "DATE"
+                },
+                {
+                    "displayName": "Birth date estimated",
+                    "eventKey": "birthDateEstimated"
+                },
+                {
+                    "displayName": "Age",
+                    "eventKey": "age",
+                    "type": "NUMBER"
+                },
+                {
+                    "displayName": "Gender",
+                    "eventKey": "gender"
+                },
+                {
+                    "displayName": "Dead",
+                    "eventKey": "dead"
+                },
+                {
+                    "displayName": "Death date",
+                    "eventKey": "deathDate",
+                    "type": "DATE"
+                }
+            ]
+        },
+        {
+            "displayName": "Facility",
+            "type": "org.motechproject.mrs.model.MRSFacility",
+            "lookupFields": ["id"],
+            "fields": [
+                {
+                    "displayName": "ID",
+                    "eventKey": "id"
+                },
+                {
+                    "displayName": "Name",
+                    "eventKey": "name"
+                },
+                {
+                    "displayName": "Country",
+                    "eventKey": "country"
+                },
+                {
+                    "displayName": "Region",
+                    "eventKey": "region"
+                },
+                {
+                    "displayName": "County district",
+                    "eventKey": "countyDistrict"
+                },
+                {
+                    "displayName": "State province",
+                    "eventKey": "stateProvince"
+                }
+            ]
+        }
+    ]
+}

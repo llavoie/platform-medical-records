@@ -1140,7 +1140,6 @@
 
 
         <!-- OSGI modules -->
-        <module>modules/mrs/api-bundle</module>
         <module>modules/openmrs/api-bundle</module>
         <module>modules/openmrs/atomfeed-bundle</module>
         <module>modules/openmrs/ws-bundle</module>

@@ -5,6 +5,7 @@ import org.apache.commons.lang.Validate;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventRelay;
 import org.motechproject.mrs.EventKeys;
+import org.motechproject.mrs.exception.MRSException;
 import org.motechproject.mrs.exception.PatientNotFoundException;
 import org.motechproject.mrs.helper.EventHelper;
 import org.motechproject.mrs.domain.MRSFacility;
@@ -253,6 +254,11 @@ public class MRSPatientAdapterImpl implements MRSPatientAdapter {
     }
 
     @Override
+    public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
+        return updatePatient(patient);
+    }
+
+    @Override
     public MRSPatient updatePatient(MRSPatient patient) {
         Validate.notNull(patient, "Patient cannot be null");
         Validate.notEmpty(patient.getPatientId(), "Patient Id may not be empty");
@@ -266,6 +272,14 @@ public class MRSPatientAdapterImpl implements MRSPatientAdapter {
         // create any attributes attached to the patient
         personAdapter.deleteAllAttributes(person);
         personAdapter.saveAttributesForPerson(person);
+
+        try {
+            patientResource.updatePatientMotechId(patient.getPatientId(), patient.getMotechId());
+        } catch (HttpException e) {
+            logger.error("Failed to update OpenMRS patient with id: " + patient.getPatientId());
+            throw new MRSException(e);
+        }
+
         OpenMRSPatient updatedPatient = new OpenMRSPatient(openMRSPatient.getPatientId(), patient.getMotechId(), person, openMRSPatient.getFacility());
         eventRelay.sendEventMessage(new MotechEvent(EventKeys.UPDATED_PATIENT_SUBJECT, EventHelper.patientParameters(updatedPatient)));
         return updatedPatient;

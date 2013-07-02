@@ -121,6 +121,11 @@ public class OpenMRSPatientAdapter implements MRSPatientAdapter {
         }
     }
 
+    @Override
+    public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
+        return updatePatient(patient, getOpenmrsPatientByMotechId(currentMotechId));
+    }
+
     /**
      * Finds a patient by Motech id and updates the patient's details in the MRS system
      *
@@ -156,6 +161,7 @@ public class OpenMRSPatientAdapter implements MRSPatientAdapter {
             personAddress.setAddress1(address);
             openMrsPatient.addAddress(personAddress);
         }
+        openMrsPatient.getPatientIdentifier().setIdentifier(patient.getMotechId());
         openMrsPatient.getPatientIdentifier().setLocation(facilityAdapter.getLocation(patient.getFacility().getFacilityId()));
         openMrsPatient.setDead(person.isDead());
         if (person.getDeathDate() != null) {

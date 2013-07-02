@@ -1,9 +1,19 @@
 package org.motechproject.openmrs.ws.resource.model;
 
 public class Identifier {
+
+    private String uuid;
     private String identifier;
     private IdentifierType identifierType;
     private Location location;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getIdentifier() {
         return identifier;

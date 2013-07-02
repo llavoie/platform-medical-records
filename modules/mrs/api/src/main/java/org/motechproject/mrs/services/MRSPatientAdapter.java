@@ -23,6 +23,16 @@ public interface MRSPatientAdapter {
     MRSPatient savePatient(MRSPatient patient);
 
     /**
+     * Finds a patient by current Motech id,
+     * and updates the patient's details (including new Motech Id) in the MRS system
+     *
+     * @param patient Patient instance with updated values (MOTECH identifier cannot be changed here)
+     * @param currentMotechId String Current Motech Id of this patient (used for searching)
+     * @return Updated instance of the patient
+     */
+    MRSPatient updatePatient(MRSPatient patient, String currentMotechId);
+
+    /**
      * Finds a patient by Motech id and updates the patient's details in the MRS system
      *
      * @param patient Patient instance with updated values (MOTECH identifier cannot be changed)

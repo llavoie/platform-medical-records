@@ -1,5 +1,6 @@
 package org.motechproject.couch.mrs.impl;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.DateTime;
 import org.motechproject.couch.mrs.model.CouchPatientImpl;
 import org.motechproject.couch.mrs.model.CouchPerson;
@@ -55,6 +56,19 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
         }
 
         return patient;
+    }
+
+    @Override
+    public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
+        List<CouchPatientImpl> patients = allCouchPatients.findByMotechId(currentMotechId);
+
+        if (CollectionUtils.isNotEmpty(patients)) {
+            CouchPatientImpl patientToUpdate = patients.get(0);
+            patientToUpdate.setMotechId(patient.getMotechId());
+            allCouchPatients.update(patientToUpdate);
+        }
+
+        return updatePatient(patient);
     }
 
     @Override

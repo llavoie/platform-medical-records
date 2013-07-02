@@ -16,4 +16,6 @@ public interface PatientResource {
 
     void deletePatient(String patientUuid) throws HttpException;
 
+    void updatePatientMotechId(String patientUuid, String newMotechId) throws HttpException;
+
 }

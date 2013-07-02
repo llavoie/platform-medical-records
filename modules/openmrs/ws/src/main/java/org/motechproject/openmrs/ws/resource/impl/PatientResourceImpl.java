@@ -7,6 +7,8 @@ import org.motechproject.openmrs.ws.HttpException;
 import org.motechproject.openmrs.ws.OpenMrsInstance;
 import org.motechproject.openmrs.ws.RestClient;
 import org.motechproject.openmrs.ws.resource.PatientResource;
+import org.motechproject.openmrs.ws.resource.model.Identifier;
+import org.motechproject.openmrs.ws.resource.model.IdentifierListResult;
 import org.motechproject.openmrs.ws.resource.model.IdentifierType;
 import org.motechproject.openmrs.ws.resource.model.IdentifierType.IdentifierTypeSerializer;
 import org.motechproject.openmrs.ws.resource.model.Location;
@@ -88,5 +90,31 @@ public class PatientResourceImpl implements PatientResource {
     private PatientIdentifierListResult getAllPatientIdentifierTypes() throws HttpException {
         String responseJson = restfulClient.getJson(openmrsInstance.toInstancePath("/patientidentifiertype?v=full"));
         return (PatientIdentifierListResult) JsonUtils.readJson(responseJson, PatientIdentifierListResult.class);
+    }
+
+    @Override
+    public void updatePatientMotechId(String patientUuid, String newMotechId) throws HttpException {
+        Gson gson = new GsonBuilder().create();
+
+        Identifier patientIdentifier = getPatientIdentifier(patientUuid);
+        patientIdentifier.setIdentifier(newMotechId);
+        String identifierUuid = patientIdentifier.getUuid();
+
+        // setting uuid, type and location to null so they are not included in request.
+        patientIdentifier.setUuid(null);
+        patientIdentifier.setIdentifierType(null);
+        patientIdentifier.setLocation(null);
+
+        String requestJson = gson.toJson(patientIdentifier);
+        restfulClient.postForJson(openmrsInstance.toInstancePathWithParams("/patient/{patientUuid}/identifier/{identifierUuid}",
+                patientUuid, identifierUuid), requestJson);
+    }
+
+    private Identifier getPatientIdentifier(String patientUuid) throws HttpException {
+        String responseJson =
+                restfulClient.getJson(openmrsInstance.toInstancePathWithParams("/patient/{patientUuid}/identifier", patientUuid));
+        IdentifierListResult identifierListResult =
+                (IdentifierListResult) JsonUtils.readJson(responseJson, IdentifierListResult.class);
+        return identifierListResult.getResults().get(0);
     }
 }

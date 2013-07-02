@@ -62,8 +62,7 @@ public class PatientsController {
             throws PatientNotFoundException, ImplementationException {
 
         validateFacility(patientDto);
-        patientDto.setMotechId(motechId);
-        mrsImplementationManager.getPatientAdapter().updatePatient(patientDto);
+        mrsImplementationManager.getPatientAdapter().updatePatient(patientDto, motechId);
     }
 
     @RequestMapping(value = "/patients/{motechId}", method = RequestMethod.POST)

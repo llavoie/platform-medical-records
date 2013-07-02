@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.motechproject.mrs.domain.MRSFacility;
 import org.motechproject.mrs.domain.MRSPatient;
@@ -141,7 +142,7 @@ public class PatientsControllerTest {
         verify(facilityAdapter).getFacility("fid1");
 
         ArgumentCaptor<MRSPatientDto> captor = ArgumentCaptor.forClass(MRSPatientDto.class);
-        verify(patientAdapter).updatePatient(captor.capture());
+        verify(patientAdapter).updatePatient(captor.capture(), Matchers.eq("id1"));
         assertPatient(captor.getValue());
     }
 

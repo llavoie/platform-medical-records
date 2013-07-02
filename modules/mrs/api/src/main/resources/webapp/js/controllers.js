@@ -157,35 +157,28 @@
         });
 
         function checkIfPatientExist () {
-            if ($routeParams.motechId === undefined) {
-                $scope.motechIdValidate = true;
-                Patient.get( { motechId: $scope.patientDto.motechId }, function (data) {
-                    if (data === "") {
-                        $scope.motechIdValidate = true;
-                    }
-                    else {
-                        $scope.motechIdValidate = false;
-                    }
-                    return $scope.motechIdValidate;
-                });
-                $scope.inProgress = false;
-            }
+            $scope.motechIdValidate = true;
+            Patient.get( { motechId: $scope.patientDto.motechId }, function (data) {
+                if (data === "" || $scope.patientDto.motechId === $routeParams.motechId) {
+                    $scope.motechIdValidate = true;
+                } else {
+                    $scope.motechIdValidate = false;
+                }
+                return $scope.motechIdValidate;
+            });
+            $scope.inProgress = false;
         }
 
         $('#inputMotechId').keyup(function(){
-            if ($routeParams.motechId === undefined) {
-                $scope.inProgress = true;
-                clearTimeout(typingTimer);
-                if ($('#inputMotechId').val) {
-                    typingTimer = setTimeout(checkIfPatientExist, doneTypingInterval);
-                }
+            $scope.inProgress = true;
+            clearTimeout(typingTimer);
+            if ($('#inputMotechId').val) {
+                typingTimer = setTimeout(checkIfPatientExist, doneTypingInterval);
             }
         });
 
         $('#inputMotechId').keydown(function(){
-            if ($routeParams.motechId === undefined) {
-                $scope.inProgress = true;
-            }
+            $scope.inProgress = true;
             if ($scope.patientDto.motechId.length > 0) {
                 $scope.hideMotechId = false;
             }
@@ -197,7 +190,7 @@
         if ($routeParams.motechId) {
             $scope.patientDto = Patient.get( { motechId: $routeParams.motechId }, function () {
                 $scope.inProgress = false;
-                $('#inputMotechId').prop('readonly', true);
+                $('#inputMotechId').prop('readonly', false);
             }, angularHandler('mrs.header.error', 'mrs.patient.error'));
         } else {
             $scope.inProgress = false;

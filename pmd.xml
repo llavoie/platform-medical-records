@@ -48,9 +48,11 @@
     <rule name="DontImportInternal"
           message="Avoid importing internal packages of any external libraries"
           class="net.sourceforge.pmd.rules.XPathRule">
+
     <description>
         Avoid importing any internal package of any external libraries.
     </description>
+
     <properties>
         <property name="xpath">
             <value>

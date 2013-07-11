@@ -1,9 +1,11 @@
 package org.motechproject.couch.mrs.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.ektorp.support.TypeDiscriminator;
 import org.motechproject.commons.couchdb.model.MotechBaseDataObject;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @TypeDiscriminator("doc.type === 'Patient'")
 public class CouchPatientImpl extends MotechBaseDataObject {
 

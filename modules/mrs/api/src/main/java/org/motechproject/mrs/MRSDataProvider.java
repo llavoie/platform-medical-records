@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MRSDataProvider extends AbstractDataProvider {
-    private static final String SUPPORT_FIELD = "id";
+    private static final String ID_FIELD = "id";
+    private static final String MOTECH_ID_FIELD = "motechId";
 
     private List<MRSPatientAdapter> patientAdapters;
     private List<MRSFacilityAdapter> facilityAdapters;
@@ -39,25 +40,34 @@ public class MRSDataProvider extends AbstractDataProvider {
     @Override
     public Object lookup(String type, Map<String, String> lookupFields) {
         Object obj = null;
+        try {
+            if (supports(type)) {
+                if (lookupFields.containsKey(ID_FIELD)) {
+                    String id = lookupFields.get(ID_FIELD);
 
-        if (supports(type) && lookupFields.containsKey(SUPPORT_FIELD)) {
-            String id = lookupFields.get(SUPPORT_FIELD);
+                    Class<?> cls = getClassForType(type);
 
-            try {
-                Class<?> cls = getClassForType(type);
+                    if (MRSPatient.class.isAssignableFrom(cls)) {
+                        obj = getPatient(id);
+                    } else if (MRSPerson.class.isAssignableFrom(cls)) {
+                        obj = getPerson(id);
+                    } else if (MRSFacility.class.isAssignableFrom(cls)) {
+                        obj = getFacility(id);
+                    }
 
-                if (MRSPatient.class.isAssignableFrom(cls)) {
-                    obj = getPatient(id);
-                } else if (MRSPerson.class.isAssignableFrom(cls)) {
-                    obj = getPerson(id);
-                } else if (MRSFacility.class.isAssignableFrom(cls)) {
-                    obj = getFacility(id);
+                } else if (lookupFields.containsKey(MOTECH_ID_FIELD)) {
+                    String motechId = lookupFields.get(MOTECH_ID_FIELD);
+
+                    Class<?> cls = getClassForType(type);
+
+                    if (MRSPatient.class.isAssignableFrom(cls)) {
+                        obj = getPatientByMotechId(motechId);
+                    }
                 }
-            } catch (ClassNotFoundException e) {
-                logError(e.getMessage(), e);
             }
+        } catch (ClassNotFoundException e) {
+            logError("Cannot lookup object: {type: %s, fields: %s}", type, lookupFields.keySet(), e);
         }
-
         return obj;
     }
 
@@ -92,6 +102,15 @@ public class MRSDataProvider extends AbstractDataProvider {
             }
         }
 
+        return obj;
+    }
+
+    private Object getPatientByMotechId(String motechId) {
+        Object obj = null;
+
+        if (patientAdapters != null && !patientAdapters.isEmpty()) {
+            obj =  patientAdapters.get(0).getPatientByMotechId(motechId);
+        }
         return obj;
     }
 

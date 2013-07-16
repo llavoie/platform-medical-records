@@ -4,7 +4,20 @@
         {
             "displayName": "mrs.patient.name",
             "type": "Patient",
-            "lookupFields": ["id"],
+            "lookupFields": [
+                {
+                    "displayName": "id",
+                    "fields": [
+                        "id"
+                    ]
+                },
+                {
+                    "displayName": "motechId",
+                    "fields": [
+                        "motechId"
+                    ]
+                }
+            ],
             "fields": [
                 {
                     "displayName": "mrs.patient.field.patientId",
@@ -23,7 +36,14 @@
         {
             "displayName": "mrs.person.name",
             "type": "Person",
-            "lookupFields": ["id"],
+            "lookupFields": [
+                {
+                    "displayName": "id",
+                    "fields": [
+                        "id"
+                    ]
+                }
+            ],
             "fields": [
                 {
                     "displayName": "mrs.person.field.personId",
@@ -81,7 +101,14 @@
         {
             "displayName": "mrs.facility.name",
             "type": "Facility",
-            "lookupFields": ["id"],
+            "lookupFields": [
+                {
+                    "displayName": "id",
+                    "fields": [
+                        "id"
+                    ]
+                }
+            ],
             "fields": [
                 {
                     "displayName": "mrs.facility.field.facilityId",

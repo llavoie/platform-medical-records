@@ -1,9 +1,11 @@
 package org.motechproject.couch.mrs.model;
 
-import java.util.Set;
 import org.ektorp.support.TypeDiscriminator;
 import org.joda.time.DateTime;
 import org.motechproject.commons.couchdb.model.MotechBaseDataObject;
+import org.motechproject.commons.date.util.DateUtil;
+
+import java.util.Set;
 
 @TypeDiscriminator("doc.type === 'Encounter'")
 public class CouchEncounterImpl extends MotechBaseDataObject {
@@ -71,7 +73,7 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
     }
 
     public DateTime getDate() {
-        return date;
+        return DateUtil.setTimeZoneUTC(date);
     }
 
     public void setDate(DateTime date) {

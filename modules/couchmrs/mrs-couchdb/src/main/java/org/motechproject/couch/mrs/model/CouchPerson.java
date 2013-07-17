@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static org.motechproject.commons.date.util.DateUtil.setTimeZone;
+import static org.motechproject.commons.date.util.DateUtil.setTimeZoneUTC;
+
 
 @TypeDiscriminator("doc.type === 'Person'")
 public class CouchPerson extends MotechBaseDataObject implements MRSPerson {
@@ -130,7 +131,7 @@ public class CouchPerson extends MotechBaseDataObject implements MRSPerson {
     }
 
     public DateTime getDateOfBirth() {
-        return setTimeZone(dateOfBirth);
+        return setTimeZoneUTC(dateOfBirth);
     }
 
     public void setDateOfBirth(DateTime dateOfBirth) {
@@ -178,7 +179,7 @@ public class CouchPerson extends MotechBaseDataObject implements MRSPerson {
     }
 
     public DateTime getDeathDate() {
-        return deathDate;
+        return setTimeZoneUTC(deathDate);
     }
 
     public void setDeathDate(DateTime deathDate) {

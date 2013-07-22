@@ -6,10 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
 import org.motechproject.couch.mrs.model.CouchEncounterImpl;
 import org.motechproject.couch.mrs.repository.AllCouchEncounters;
-import org.motechproject.couch.mrs.repository.AllCouchObservations;
 import org.motechproject.couch.mrs.util.CouchDAOBroker;
 import org.motechproject.couch.mrs.util.CouchMRSConverterUtil;
 import org.motechproject.event.MotechEvent;
@@ -30,25 +28,12 @@ public class CouchEncounterAdapter implements MRSEncounterAdapter {
     @Autowired
     private AllCouchEncounters allEncounters;
     @Autowired
-    private AllCouchObservations allObservations;
-    @Autowired
     private EventRelay eventRelay;
-
 
     @Override
     public MRSEncounter createEncounter(MRSEncounter mrsEncounter) {
         verifyObsIds(mrsEncounter.getObservations());
         allEncounters.createOrUpdateEncounter(CouchMRSConverterUtil.convertEncounterToEncounterImpl(mrsEncounter));
-
-        Set<? extends MRSObservation> observations = mrsEncounter.getObservations();
-
-        if (observations != null && observations.size() > 0) {
-            Iterator<? extends MRSObservation> obsIterator = observations.iterator();
-            while (obsIterator.hasNext()) {
-                MRSObservation obs = obsIterator.next();
-                allObservations.addOrUpdateObservation(obs);
-            }
-        }
 
         eventRelay.sendEventMessage(new MotechEvent(EventKeys.CREATED_NEW_ENCOUNTER_SUBJECT, EventHelper.encounterParameters(mrsEncounter)));
         return mrsEncounter;

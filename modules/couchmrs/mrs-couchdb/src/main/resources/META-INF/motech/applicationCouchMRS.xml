@@ -34,11 +34,6 @@
         <constructor-arg value="motech-facility-repository" />
     </bean>
 
-    <bean id="couchObservationDatabaseConnector" factory-bean="couchDbManager"
-        factory-method="getConnector">
-        <constructor-arg value="motech-observation-repository" />
-    </bean>
-
     <bean id="couchEncounterDatabaseConnector" factory-bean="couchDbManager"
         factory-method="getConnector">
         <constructor-arg value="motech-encounter-repository" />

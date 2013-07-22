@@ -5,24 +5,45 @@ import static ch.lambdaj.Lambda.on;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.annotate.JsonSubTypes;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.joda.time.DateTime;
+import org.motechproject.commons.date.util.DateUtil;
+import org.motechproject.couch.mrs.util.CouchMRSConverterUtil;
 import org.motechproject.mrs.domain.MRSObservation;
 import ch.lambdaj.Lambda;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@class")
+@JsonSubTypes({
+       @JsonSubTypes.Type(value = CouchObservation.class, name = "couchObservation")
+})
 public class CouchObservation<T> implements MRSObservation<T> {
 
+    @JsonProperty("obsPatientId")
     private String patientId;
     private String observationId;
+    @JsonProperty("obsDate")
     private DateTime date;
     private String conceptName;
     private T value;
-    private Set<MRSObservation> dependantObservations;
+    @JsonDeserialize(as = Set.class, contentAs = CouchObservation.class)
+    @JsonSerialize(as = Set.class, contentAs = CouchObservation.class)
+    private Set<CouchObservation> dependantObservations;
+
+    public CouchObservation() {
+        dependantObservations = new HashSet<CouchObservation>();
+    }
 
     public CouchObservation(DateTime date, String conceptName, T value) {
+        this();
         this.observationId = UUID.randomUUID().toString();
         this.date = date;
         this.conceptName = conceptName;
@@ -44,7 +65,7 @@ public class CouchObservation<T> implements MRSObservation<T> {
         this.patientId = patientId;
     }
 
-    
+
     public String getPatientId() {
         return patientId;
     }
@@ -62,7 +83,7 @@ public class CouchObservation<T> implements MRSObservation<T> {
     }
 
     public DateTime getDate() {
-        return date;
+        return DateUtil.setTimeZoneUTC(date);
     }
 
     public void setDate(DateTime date) {
@@ -86,27 +107,30 @@ public class CouchObservation<T> implements MRSObservation<T> {
     }
 
     @Override
-    public Set<MRSObservation> getDependantObservations() {
+    public Set<? extends MRSObservation> getDependantObservations() {
         return dependantObservations;
     }
 
     @Override
     public void setDependantObservations(Set<MRSObservation> dependantObservations) {
-        this.dependantObservations = dependantObservations;
+        this.dependantObservations = new HashSet<CouchObservation>();
+        if (dependantObservations != null) {
+            Iterator<MRSObservation> iterator = dependantObservations.iterator();
+            while (iterator.hasNext()) {
+                MRSObservation obs = iterator.next();
+                this.dependantObservations.add(CouchMRSConverterUtil.convertObservationToCouchObservation(obs));
+            }
+        }
     }
 
     public void addDependantObservation(MRSObservation mrsObservation) {
-
-        if (this.dependantObservations == null) {
-            dependantObservations = new HashSet<>();
-        }
 
         List<? extends MRSObservation> existingObservationList = Lambda.filter(having(on(CouchObservation.class).getConceptName(), is(equalTo(mrsObservation.getConceptName()))), dependantObservations);
         if (!existingObservationList.isEmpty()) {
             dependantObservations.remove(existingObservationList.get(0));
         }
 
-        dependantObservations.add(mrsObservation);
+        dependantObservations.add(CouchMRSConverterUtil.convertObservationToCouchObservation(mrsObservation));
     }
 
     @Override

@@ -1,17 +1,23 @@
 package org.motechproject.couch.mrs.repository;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.ektorp.CouchDbConnector;
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.motechproject.couch.mrs.model.CouchEncounterImpl;
+import org.motechproject.couch.mrs.model.CouchObservation;
 import org.motechproject.couch.mrs.repository.impl.AllCouchEncountersImpl;
+import org.motechproject.mrs.domain.MRSObservation;
 import org.motechproject.testing.utils.SpringIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,7 +37,7 @@ public class AllCouchEncountersIT extends SpringIntegrationTest {
 
     @Test
     public void shouldSaveEncounterAndRetrieveById() {
-        CouchEncounterImpl encounter = buildEncounter("patientId", "encounterType");
+        CouchEncounterImpl encounter = buildEncounter("patientId", "encounterType", "by-id");
 
         allCouchEncounters.createOrUpdateEncounter(encounter);
 
@@ -43,17 +49,18 @@ public class AllCouchEncountersIT extends SpringIntegrationTest {
         assertEquals(encounter.getCreatorId(), retrievedEncounter.getCreatorId());
         assertEquals(encounter.getFacilityId(), retrievedEncounter.getFacilityId());
         assertEquals(encounter.getProviderId(), retrievedEncounter.getProviderId());
-        assertEquals(encounter.getObservationIds(), retrievedEncounter.getObservationIds());
+
+        assertEquals(encounter.getObservations().size(), retrievedEncounter.getObservations().size());
     }
 
     @Test
     public void shouldFindByMotechIdAndEncounterType() {
-        CouchEncounterImpl encounter = buildEncounter("patientId1", "encounterType1");
-        CouchEncounterImpl encounter2 = buildEncounter("patientId1", "encounterType1");
-        CouchEncounterImpl encounter3 = buildEncounter("patientId1", "encounterType1");
-        CouchEncounterImpl encounter4 = buildEncounter("patientId1", "encounterType2");
-        CouchEncounterImpl encounter5 = buildEncounter("patientId2", "encounterType1");
-        CouchEncounterImpl encounter6 = buildEncounter("patientId2", "encounterType2");
+        CouchEncounterImpl encounter = buildEncounter("patientId1", "encounterType1", "by-type");
+        CouchEncounterImpl encounter2 = buildEncounter("patientId1", "encounterType1", "by-type");
+        CouchEncounterImpl encounter3 = buildEncounter("patientId1", "encounterType1", "by-type");
+        CouchEncounterImpl encounter4 = buildEncounter("patientId1", "encounterType2", "by-type");
+        CouchEncounterImpl encounter5 = buildEncounter("patientId2", "encounterType1", "by-type");
+        CouchEncounterImpl encounter6 = buildEncounter("patientId2", "encounterType2", "by-type");
 
         allCouchEncounters.createOrUpdateEncounter(encounter);
         allCouchEncounters.createOrUpdateEncounter(encounter2);
@@ -66,12 +73,59 @@ public class AllCouchEncountersIT extends SpringIntegrationTest {
         assertEquals(3, retrievedEncounters.size());
     }
 
-    private CouchEncounterImpl buildEncounter(String patientId, String encounterType) {
-        Set<String> obsIds = new HashSet<String>();
-        obsIds.add("obs1");
-        obsIds.add("obs2");
-        obsIds.add("obs3");
-        return new CouchEncounterImpl(UUID.randomUUID().toString(), "providerId", "creatorId", "facilityId", new DateTime(), obsIds, patientId, encounterType);
+    @Test
+    public void shouldFindByMotechIdAndConceptName() {
+        CouchEncounterImpl encounter = buildEncounter("patientId1", "encounterType", "1-");
+        CouchEncounterImpl encounter2 = buildEncounter("patientId1", "encounterType", "2-");
+        CouchEncounterImpl encounter3 = buildEncounter("patientId1", "encounterType", "3-");
+        CouchEncounterImpl encounter4 = buildEncounter("patientId1", "encounterType", "2-");
+        CouchEncounterImpl encounter5 = buildEncounter("patientId2", "encounterType", "2-");
+        CouchEncounterImpl encounter6 = buildEncounter("patientId2", "encounterType", "1-");
+
+        allCouchEncounters.createOrUpdateEncounter(encounter);
+        allCouchEncounters.createOrUpdateEncounter(encounter2);
+        allCouchEncounters.createOrUpdateEncounter(encounter3);
+        allCouchEncounters.createOrUpdateEncounter(encounter4);
+        allCouchEncounters.createOrUpdateEncounter(encounter5);
+        allCouchEncounters.createOrUpdateEncounter(encounter6);
+
+        List<MRSObservation> encounters = allCouchEncounters.findObservationsByPatientIdAndConceptName("patientId1", "2-concept1");
+
+        assertEquals(encounters.size(), 2);
+    }
+
+
+    @Test
+    public void shouldFindByObservationId() {
+        CouchEncounterImpl encounter = buildEncounter("testObsIdPatient", "encounterType", "prefix1");
+
+        allCouchEncounters.createOrUpdateEncounter(encounter);
+
+        MRSObservation obs = encounter.getObservations().iterator().next();
+        String obsId = obs.getObservationId();
+
+        CouchEncounterImpl encounterResult = allCouchEncounters.findEncounterByObservationId(obsId);
+
+        assertNotNull(encounterResult);
+
+        MRSObservation obsResult = encounterResult.getObservationById(obsId);
+        assertNotNull(obsResult);
+
+        assertEquals(obs.getConceptName(), obsResult.getConceptName());
+        assertEquals(obs.getValue(), obsResult.getValue());
+    }
+
+    private CouchEncounterImpl buildEncounter(String patientId, String encounterType, String conceptPrefix) {
+        Set<CouchObservation> observations = new HashSet<CouchObservation>();
+
+        CouchObservation obs1 = new CouchObservation(DateTime.now(), conceptPrefix + "concept1", "value1");
+        CouchObservation obs2 = new CouchObservation(DateTime.now(), conceptPrefix + "concept2", "value2");
+        CouchObservation obs3 = new CouchObservation(DateTime.now(), conceptPrefix + "concept3", "value3");
+        observations.add(obs1);
+        observations.add(obs2);
+        observations.add(obs3);
+
+        return new CouchEncounterImpl(UUID.randomUUID().toString(), "providerId", "creatorId", "facilityId", new DateTime(), observations, patientId, encounterType);
     }
 
     @Override

@@ -10,8 +10,8 @@ import org.motechproject.couch.mrs.repository.AllCouchConcepts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+
 @Repository
 public class AllCouchConceptsImpl extends MotechBaseRepository<CouchConcept> implements AllCouchConcepts{
 

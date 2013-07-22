@@ -1,65 +1,62 @@
 package org.motechproject.couch.mrs.impl;
 
-import org.motechproject.couch.mrs.model.CouchObservationImpl;
-import org.motechproject.couch.mrs.repository.AllCouchObservations;
-import org.motechproject.couch.mrs.util.CouchDAOBroker;
+import org.motechproject.couch.mrs.model.CouchEncounterImpl;
+import org.motechproject.couch.mrs.repository.AllCouchEncounters;
+import org.motechproject.event.MotechEvent;
+import org.motechproject.event.listener.EventRelay;
+import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSObservation;
 import org.motechproject.mrs.exception.ObservationNotFoundException;
+import org.motechproject.mrs.helper.EventHelper;
 import org.motechproject.mrs.services.MRSObservationAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class CouchObservationAdapter implements MRSObservationAdapter {
 
     @Autowired
-    private AllCouchObservations allCouchObservations;
+    private AllCouchEncounters allCouchEncounters;
 
     @Autowired
-    private CouchDAOBroker daoBroker;
+    private EventRelay eventRelay;
 
     @Override
     public void voidObservation(MRSObservation mrsObservation, String reason, String mrsUserMotechId)
             throws ObservationNotFoundException {
 
-        MRSObservation obs = getObservationById(mrsObservation.getObservationId());
+        CouchEncounterImpl encounter = allCouchEncounters.findEncounterByObservationId(mrsObservation.getObservationId());
 
-        if (obs == null) {
+        if (encounter == null) {
             throw new ObservationNotFoundException("The observation with id: " + mrsObservation.getObservationId() + " was not found in the Couch database");
-        }
+        } 
 
-        allCouchObservations.removeObservation(obs);
+        MRSObservation obsToRemove = encounter.getObservationById(mrsObservation.getObservationId());
+
+        encounter.getObservations().remove(obsToRemove);
+
+        allCouchEncounters.updateEncounter(encounter);
+
+        eventRelay.sendEventMessage(new MotechEvent(EventKeys.DELETED_OBSERVATION_SUBJECT, EventHelper.observationParameters(obsToRemove)));
     }
 
     @Override
     public MRSObservation findObservation(String patientMotechId, String conceptName) {
-        return daoBroker.returnObs(allCouchObservations.findByMotechIdAndConceptName(patientMotechId, conceptName));
+        List<MRSObservation> obsList = findObservations(patientMotechId, conceptName);
+        if (obsList.size() > 0) {
+            return obsList.get(0);
+        }
+        return null;
     }
 
     @Override
     public List<MRSObservation> findObservations(String patientMotechId, String conceptName) {
-        List<CouchObservationImpl> obsList = allCouchObservations.findByMotechIdAndConceptName(patientMotechId, conceptName);
-
-        return generateObsList(obsList);
-    }
-
-    private List<MRSObservation> generateObsList(List<CouchObservationImpl> obsList) {
-
-        List<MRSObservation> observations = new ArrayList<MRSObservation>();
-
-        if (obsList != null && obsList.size() > 0) {
-            for (CouchObservationImpl obs : obsList) {
-                observations.add(daoBroker.buildFullObservation(obs));
-            }
-        }
-
-        return observations;
+        return allCouchEncounters.findObservationsByPatientIdAndConceptName(patientMotechId, conceptName);
     }
 
     @Override
     public MRSObservation getObservationById(String observationId) {
-        return daoBroker.returnObs(allCouchObservations.findByObservationId(observationId));
+        return allCouchEncounters.findByObservationId(observationId);
     }
 }

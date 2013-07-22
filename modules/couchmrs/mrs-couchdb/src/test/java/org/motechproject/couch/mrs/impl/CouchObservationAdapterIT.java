@@ -3,42 +3,34 @@ package org.motechproject.couch.mrs.impl;
 import org.ektorp.CouchDbConnector;
 import org.joda.time.DateTime;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.motechproject.couch.mrs.impl.CouchFacilityAdapterIT.MrsListener;
+import org.motechproject.couch.mrs.model.CouchEncounter;
+import org.motechproject.couch.mrs.model.CouchEncounterImpl;
 import org.motechproject.couch.mrs.model.CouchObservation;
-import org.motechproject.couch.mrs.model.CouchObservationImpl;
-import org.motechproject.couch.mrs.model.CouchPerson;
-import org.motechproject.couch.mrs.model.CouchProvider;
-import org.motechproject.couch.mrs.model.Initializer;
 import org.motechproject.couch.mrs.model.MRSCouchException;
-import org.motechproject.couch.mrs.repository.AllCouchObservations;
-import org.motechproject.couch.mrs.repository.AllCouchProviders;
-import org.motechproject.couch.mrs.repository.impl.AllCouchObservationsImpl;
-import org.motechproject.couch.mrs.repository.impl.AllCouchProvidersImpl;
+import org.motechproject.couch.mrs.repository.AllCouchEncounters;
+import org.motechproject.couch.mrs.repository.impl.AllCouchEncountersImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
 import org.motechproject.event.listener.EventListenerRegistry;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
+import org.motechproject.mrs.domain.MRSEncounter;
 import org.motechproject.mrs.domain.MRSObservation;
-import org.motechproject.mrs.domain.MRSProvider;
 import org.motechproject.mrs.exception.ObservationNotFoundException;
 import org.motechproject.testing.utils.SpringIntegrationTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,7 +41,7 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
     private CouchObservationAdapter observationAdapter;
 
     @Autowired
-    private AllCouchObservations allObservations;
+    private AllCouchEncounters allCouchEncounters;
 
     @Autowired
     EventListenerRegistry eventListenerRegistry;
@@ -58,8 +50,63 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
     final Object lock = new Object();
 
     @Autowired
-    @Qualifier("couchObservationDatabaseConnector")
+    @Qualifier("couchEncounterDatabaseConnector")
     CouchDbConnector connector;
+
+    @Test
+    public void shouldFindByDependantObservation() {
+        CouchObservation<String> observation1 = new CouchObservation<String>(new DateTime(), "level1", "stringValue", "patient1");
+        CouchObservation<String> observation2 = new CouchObservation<String>(new DateTime(), "level2", "stringValue", "patient1");
+        CouchObservation<String> observation3 = new CouchObservation<String>(new DateTime(), "level3", "stringValue", "patient1");
+        CouchObservation<String> observation4 = new CouchObservation<String>(new DateTime(), "level3-2", "stringValue", "patient1");
+        CouchObservation<String> observation5 = new CouchObservation<String>(new DateTime(), "level4", "stringValue", "patient1");
+
+        observation4.addDependantObservation(observation5);
+        observation2.addDependantObservation(observation4);
+        observation2.addDependantObservation(observation3);
+        observation1.addDependantObservation(observation2);
+
+        CouchEncounterImpl couchEncounter = new CouchEncounterImpl();
+
+        HashSet<CouchObservation> observations = new HashSet<CouchObservation>();
+
+        observations.add(observation1);
+
+        couchEncounter.setObservations(observations);
+        couchEncounter.setPatientId("PatientId");
+
+        allCouchEncounters.createOrUpdateEncounter(couchEncounter);
+
+        MRSObservation obs5 = observationAdapter.getObservationById(observation5.getObservationId());
+
+        assertEquals(obs5.getConceptName(), observation5.getConceptName());
+        assertEquals(obs5.getObservationId(), observation5.getObservationId());
+
+        MRSObservation obs4 = observationAdapter.getObservationById(observation4.getObservationId());
+
+        assertEquals(obs4.getConceptName(), observation4.getConceptName());
+        assertEquals(obs4.getObservationId(), observation4.getObservationId());
+
+        MRSObservation obs3 = observationAdapter.getObservationById(observation3.getObservationId());
+
+        assertEquals(obs3.getConceptName(), observation3.getConceptName());
+        assertEquals(obs3.getObservationId(), observation3.getObservationId());
+
+        MRSObservation obs2 = observationAdapter.getObservationById(observation2.getObservationId());
+
+        assertEquals(obs2.getConceptName(), observation2.getConceptName());
+        assertEquals(obs2.getObservationId(), observation2.getObservationId());
+
+        MRSObservation obs1 = observationAdapter.getObservationById(observation1.getObservationId());
+
+        assertEquals(obs1.getConceptName(), observation1.getConceptName());
+        assertEquals(obs1.getObservationId(), observation1.getObservationId());
+        
+        List<MRSObservation> observationsReturned = observationAdapter.findObservations(couchEncounter.getPatientId(), observation4.getConceptName());
+        assertEquals(observationsReturned.size(), 1);
+        assertEquals(observationsReturned.get(0).getConceptName(), observation4.getConceptName());
+        assertEquals(observationsReturned.get(0).getObservationId(), observation4.getObservationId());
+    }
 
     @Test
     public void shouldReturnFullObservationObjectGraph() throws MRSCouchException {
@@ -79,12 +126,21 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
 
         observation4.setDependantObservations(dependantObservations);
 
-        allObservations.addOrUpdateObservation(observation);
-        allObservations.addOrUpdateObservation(observation2);
-        allObservations.addOrUpdateObservation(observation3);
-        allObservations.addOrUpdateObservation(observation4);
+        CouchEncounterImpl couchEncounter = new CouchEncounterImpl();
 
-        List<MRSObservation> obsList = observationAdapter.findObservations(observation4.getPatientId(), observation4.getConceptName());
+        HashSet<CouchObservation> observations = new HashSet<CouchObservation>();
+
+        observations.add(observation);
+        observations.add(observation2);
+        observations.add(observation3);
+        observations.add(observation4);
+
+        couchEncounter.setObservations(observations);
+        couchEncounter.setPatientId("PatientId");
+
+        allCouchEncounters.createOrUpdateEncounter(couchEncounter);
+
+        List<MRSObservation> obsList = observationAdapter.findObservations(couchEncounter.getPatientId(), observation4.getConceptName());
 
         assertEquals(1, obsList.size());
 
@@ -100,10 +156,67 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
     }
 
     @Test
+    public void shouldVoidObservations() throws ObservationNotFoundException {
+        CouchObservation observation = new CouchObservation(new DateTime(), "testConcept1", "stringValue", "patient1");
+        CouchObservation observation2 = new CouchObservation(new DateTime(), "testConcept2", "stringValue", "patient1");
+        CouchObservation observation3 = new CouchObservation(new DateTime(), "testConcept3", "stringValue", "patient1");
+        CouchObservation observation4 = new CouchObservation(new DateTime(), "testConcept4", "stringValue", "patient1");
+
+        CouchEncounterImpl encounter = new CouchEncounterImpl();
+
+        HashSet<CouchObservation> observations = new HashSet<CouchObservation>();
+        observations.add(observation);
+        observations.add(observation2);
+        observations.add(observation3);
+        observations.add(observation4);
+
+        encounter.setObservations(observations);
+        encounter.setPatientId("testVoidPatient");
+
+        allCouchEncounters.createOrUpdateEncounter(encounter);
+
+        CouchEncounterImpl encounterReturned = allCouchEncounters.findEncounterById(encounter.getEncounterId());
+
+        assertEquals(4, encounterReturned.getObservations().size());
+
+        observationAdapter.voidObservation(observation, null, null);
+
+        encounterReturned = allCouchEncounters.findEncounterById(encounter.getEncounterId());
+
+        assertEquals(3, encounterReturned.getObservations().size());
+
+        observationAdapter.voidObservation(observation2, null, null);
+
+        encounterReturned = allCouchEncounters.findEncounterById(encounter.getEncounterId());
+
+        assertEquals(2, encounterReturned.getObservations().size());
+
+        observationAdapter.voidObservation(observation3, null, null);
+
+        encounterReturned = allCouchEncounters.findEncounterById(encounter.getEncounterId());
+
+        assertEquals(1, encounterReturned.getObservations().size());
+
+        observationAdapter.voidObservation(observation4, null, null);
+
+        encounterReturned = allCouchEncounters.findEncounterById(encounter.getEncounterId());
+
+        assertEquals(0, encounterReturned.getObservations().size());
+    }
+
+    @Test
     public void shouldRaiseVoidEvent() throws ObservationNotFoundException, InterruptedException {
         CouchObservation observation = new CouchObservation(new DateTime(), "testConcept", "stringValue", "patient1");
 
-        allObservations.addOrUpdateObservation(observation);
+        CouchEncounterImpl encounter = new CouchEncounterImpl();
+
+        HashSet<CouchObservation> observations = new HashSet<CouchObservation>();
+        observations.add(observation);
+
+        encounter.setObservations(observations);
+        encounter.setPatientId("testVoidPatient");
+
+        allCouchEncounters.createOrUpdateEncounter(encounter);
 
         mrsListener = new MrsListener();
         eventListenerRegistry.registerListener(mrsListener, EventKeys.DELETED_OBSERVATION_SUBJECT);
@@ -125,7 +238,7 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
 
     @After
     public void tearDown() {
-        ((AllCouchObservationsImpl) allObservations).removeAll();
+        ((AllCouchEncountersImpl) allCouchEncounters).removeAll();
         eventListenerRegistry.clearListenersForBean("mrsTestListener");
     }
 

@@ -1,11 +1,13 @@
 package org.motechproject.couch.mrs.model;
 
+import java.util.Iterator;
+import java.util.Set;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.ektorp.support.TypeDiscriminator;
 import org.joda.time.DateTime;
 import org.motechproject.commons.couchdb.model.MotechBaseDataObject;
 import org.motechproject.commons.date.util.DateUtil;
-
-import java.util.Set;
+import org.motechproject.mrs.domain.MRSObservation;
 
 @TypeDiscriminator("doc.type === 'Encounter'")
 public class CouchEncounterImpl extends MotechBaseDataObject {
@@ -16,8 +18,10 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
     private String providerId;
     private String creatorId;
     private String facilityId;
+    @JsonProperty("encounterDate")
     private DateTime date;
-    private Set<String> observationIds;
+    private Set<CouchObservation> observations;
+    @JsonProperty("encounterPatientId")
     private String patientId;
     private String encounterType;
 
@@ -28,14 +32,14 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
         this.setType(type);
     }
 
-    public CouchEncounterImpl(String encounterId, String providerId, String creatorId, String facilityId, DateTime date, Set<String> observationIds, String patientId, String encounterType) {
+    public CouchEncounterImpl(String encounterId, String providerId, String creatorId, String facilityId, DateTime date, Set<CouchObservation> observations, String patientId, String encounterType) {
         this();
         this.encounterId = encounterId;
         this.providerId = providerId;
         this.creatorId = creatorId;
         this.facilityId = facilityId;
         this.date = date;
-        this.observationIds = observationIds;
+        this.observations = observations;
         this.patientId = patientId;
         this.encounterType = encounterType;
     }
@@ -80,12 +84,12 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
         this.date = date;
     }
 
-    public Set<String> getObservationIds() {
-        return observationIds;
+    public Set<CouchObservation> getObservations() {
+        return observations;
     }
 
-    public void setObservationIds(Set<String> observationIds) {
-        this.observationIds = observationIds;
+    public void setObservations(Set<CouchObservation> observations) {
+        this.observations = observations;
     }
 
     public String getPatientId() {
@@ -106,5 +110,48 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
 
     public String getType() {
         return type;
+    }
+
+    public MRSObservation getObservationById(String observationId) {
+        MRSObservation returnObs = null;
+
+        if (observations != null) {
+            for (MRSObservation obs : observations) {
+                if (obs.getObservationId().equals(observationId)) {
+                    return obs;
+                } else {
+                    MRSObservation dependantObs = traverseDependantObservations(obs, observationId);
+
+                    if (dependantObs != null) {
+                        return dependantObs;
+                    }
+                }
+            }
+        }
+
+        return returnObs;
+    }
+
+    private MRSObservation traverseDependantObservations(MRSObservation obs, String targetObsId) {
+        if (obs.getDependantObservations() == null) {
+            return null;
+        }
+
+        Iterator<? extends MRSObservation> iterator = obs.getDependantObservations().iterator();
+
+        while (iterator.hasNext()) {
+            MRSObservation dependantObs = iterator.next();
+            if (dependantObs.getObservationId().equals(targetObsId)) {
+                return dependantObs;
+            } else {
+                MRSObservation dependantObs2 = traverseDependantObservations(dependantObs, targetObsId);
+
+                if (dependantObs2 != null) {
+                    return dependantObs2;
+                }
+            }
+        }
+
+        return null;
     }
 }

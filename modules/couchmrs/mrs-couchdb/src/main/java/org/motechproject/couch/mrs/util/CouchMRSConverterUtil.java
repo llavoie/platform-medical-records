@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.motechproject.couch.mrs.model.CouchAttribute;
 import org.motechproject.couch.mrs.model.CouchConcept;
 import org.motechproject.couch.mrs.model.CouchEncounterImpl;
 import org.motechproject.couch.mrs.model.CouchFacility;
+import org.motechproject.couch.mrs.model.CouchObservation;
 import org.motechproject.couch.mrs.model.CouchPatientImpl;
 import org.motechproject.couch.mrs.model.CouchPerson;
 import org.motechproject.couch.mrs.model.CouchProvider;
@@ -34,13 +34,11 @@ public final class CouchMRSConverterUtil {
         MRSFacility facility = mrsEncounter.getFacility();
         MRSUser creator = mrsEncounter.getCreator();
         MRSPatient patient = mrsEncounter.getPatient();
-        Set<? extends MRSObservation> observations = mrsEncounter.getObservations();
 
         String providerId = null;
         String facilityId = null;
         String creatorId = null;
         String patientId = null;
-        Set<String> observationIds = null;
 
         if (provider != null) {
             providerId = provider.getProviderId();
@@ -58,18 +56,38 @@ public final class CouchMRSConverterUtil {
             patientId = patient.getMotechId();
         }
 
-        if (observations != null && observations.size() > 0) {
-            Iterator<? extends MRSObservation> obsIterator = observations.iterator();
-            observationIds = new HashSet<String>();
-            while (obsIterator.hasNext()) {
-                String obsId = obsIterator.next().getObservationId();
-                if (obsId != null && obsId.trim().length() > 0) {
-                    observationIds.add(obsId);
-                }
+        Set<CouchObservation> couchObservations = new HashSet<CouchObservation>();
+
+        if (mrsEncounter.getObservations() != null) {
+            for (MRSObservation obs : mrsEncounter.getObservations()) {
+                couchObservations.add(convertObservationToCouchObservation(obs));
+            }
+
+        }
+
+        return new CouchEncounterImpl(mrsEncounter.getEncounterId(), providerId, creatorId, facilityId, mrsEncounter.getDate(), couchObservations, patientId, mrsEncounter.getEncounterType());
+    }
+
+    public static CouchObservation convertObservationToCouchObservation(MRSObservation obs) {
+        CouchObservation couchObs = new CouchObservation();
+        couchObs.setConceptName(obs.getConceptName());
+        couchObs.setDate(obs.getDate());
+        couchObs.setObservationId(obs.getObservationId());
+        couchObs.setPatientId(obs.getPatientId());
+        couchObs.setValue(obs.getValue());
+
+        Set<? extends MRSObservation> dependantObs = obs.getDependantObservations();
+
+        if (dependantObs != null) {
+            Iterator<? extends MRSObservation> iterator = dependantObs.iterator();
+            while (iterator.hasNext()) {
+                MRSObservation nextObs = iterator.next();
+                nextObs = convertObservationToCouchObservation(nextObs);
+                couchObs.addDependantObservation(nextObs);
             }
         }
 
-        return new CouchEncounterImpl(mrsEncounter.getEncounterId(), providerId, creatorId, facilityId, mrsEncounter.getDate(), observationIds, patientId, mrsEncounter.getEncounterType());
+        return couchObs;
     }
 
     public static CouchPatientImpl createPatient(MRSPatient patient) {

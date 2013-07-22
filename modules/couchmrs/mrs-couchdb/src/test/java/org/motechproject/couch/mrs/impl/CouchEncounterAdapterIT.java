@@ -15,12 +15,10 @@ import org.motechproject.couch.mrs.model.CouchProviderImpl;
 import org.motechproject.couch.mrs.model.MRSCouchException;
 import org.motechproject.couch.mrs.repository.AllCouchEncounters;
 import org.motechproject.couch.mrs.repository.AllCouchFacilities;
-import org.motechproject.couch.mrs.repository.AllCouchObservations;
 import org.motechproject.couch.mrs.repository.AllCouchPatients;
 import org.motechproject.couch.mrs.repository.AllCouchProviders;
 import org.motechproject.couch.mrs.repository.impl.AllCouchEncountersImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchFacilitiesImpl;
-import org.motechproject.couch.mrs.repository.impl.AllCouchObservationsImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchPatientsImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchProvidersImpl;
 import org.motechproject.event.MotechEvent;
@@ -48,9 +46,6 @@ public class CouchEncounterAdapterIT extends SpringIntegrationTest {
 
     @Autowired
     private CouchEncounterAdapter encounterAdapter;
-
-    @Autowired
-    private AllCouchObservations allObservations;
 
     @Autowired
     private AllCouchEncounters allEncounters;
@@ -127,11 +122,7 @@ public class CouchEncounterAdapterIT extends SpringIntegrationTest {
     private CouchEncounter generateEncounter() {
         CouchObservation<String> observation = new CouchObservation<String>(new DateTime(), "testConcept", "stringValue", "patient1");
 
-        CouchObservation<String> observation2 = new CouchObservation<String>(new DateTime(), "testConcep2", "stringValue2", "patient1");
-
-
-        allObservations.addOrUpdateObservation(observation);
-        allObservations.addOrUpdateObservation(observation2);
+        CouchObservation<String> observation2 = new CouchObservation<String>(new DateTime(), "testConcept2", "stringValue2", "patient1");
 
         CouchProviderImpl provider = new CouchProviderImpl("ProviderId", null);
         allProviders.addProvider(provider);
@@ -183,7 +174,6 @@ public class CouchEncounterAdapterIT extends SpringIntegrationTest {
 
     @After
     public void tearDown() {
-        ((AllCouchObservationsImpl) allObservations).removeAll();
         ((AllCouchEncountersImpl) allEncounters).removeAll();
         ((AllCouchPatientsImpl) allPatients).removeAll();
         ((AllCouchProvidersImpl) allProviders).removeAll();

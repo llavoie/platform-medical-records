@@ -1,0 +1,14 @@
+[main]
+host = https://www.transifex.com
+
+[MOTECH.appointments]
+file_filter = modules/appointments/api/src/main/resources/webapp/messages/messages_<lang>.properties
+source_file = modules/appointments/api/src/main/resources/webapp/messages/messages.properties
+source_lang = en_US
+type = PROPERTIES
+
+[MOTECH.mrs-api]
+file_filter = modules/mrs/api/src/main/resources/webapp/messages/messages_<lang>.properties
+source_file = modules/mrs/api/src/main/resources/webapp/messages/messages.properties
+source_lang = en_US
+type = PROPERTIES

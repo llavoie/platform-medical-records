@@ -14,9 +14,11 @@ import org.motechproject.couch.mrs.model.MRSCouchException;
 import org.motechproject.couch.mrs.repository.AllCouchFacilities;
 import org.motechproject.couch.mrs.repository.AllCouchPatients;
 import org.motechproject.couch.mrs.repository.AllCouchPersons;
+import org.motechproject.couch.mrs.repository.AllMotechIdReservations;
 import org.motechproject.couch.mrs.repository.impl.AllCouchFacilitiesImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchPatientsImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchPersonsImpl;
+import org.motechproject.couch.mrs.repository.impl.AllMotechIdReservationsImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
 import org.motechproject.event.listener.EventListenerRegistry;
@@ -59,6 +61,9 @@ public class CouchPatientAdapterIT extends SpringIntegrationTest {
 
     @Autowired
     private AllCouchFacilities allFacilities;
+
+    @Autowired
+    private AllMotechIdReservations allMotechIdReservations;
 
     @Autowired
     private EventListenerRegistry eventListenerRegistry;
@@ -204,6 +209,7 @@ public class CouchPatientAdapterIT extends SpringIntegrationTest {
         ((AllCouchPatientsImpl) allPatients).removeAll();
         ((AllCouchPersonsImpl) allPersons).removeAll();
         ((AllCouchFacilitiesImpl) allFacilities).removeAll();
+        ((AllMotechIdReservationsImpl) allMotechIdReservations).removeAll();
         eventListenerRegistry.clearListenersForBean("mrsTestListener");
     }
 

@@ -5,7 +5,9 @@ import org.joda.time.DateTime;
 import org.motechproject.couch.mrs.model.CouchPatientImpl;
 import org.motechproject.couch.mrs.model.CouchPerson;
 import org.motechproject.couch.mrs.model.MRSCouchException;
+import org.motechproject.couch.mrs.model.MotechIdReservation;
 import org.motechproject.couch.mrs.repository.AllCouchPatients;
+import org.motechproject.couch.mrs.repository.AllMotechIdReservations;
 import org.motechproject.couch.mrs.util.CouchDAOBroker;
 import org.motechproject.couch.mrs.util.CouchMRSConverterUtil;
 import org.motechproject.couch.mrs.repository.AllCouchPersons;
@@ -37,6 +39,9 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
     private AllCouchPersons allCouchPersons;
 
     @Autowired
+    private AllMotechIdReservations allMotechIdReservations;
+
+    @Autowired
     private EventRelay eventRelay;
 
     @Override
@@ -47,6 +52,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
         CouchPerson couchPerson = CouchMRSConverterUtil.convertPersonToCouchPerson(patient.getPerson());
 
         try {
+            allMotechIdReservations.addMotechIdReservation(new MotechIdReservation(patient.getMotechId()));
             allCouchPersons.addPerson(couchPerson);
             couchPatient.setPersonId(couchPerson.getPersonId());
             allCouchPatients.addPatient(couchPatient);
@@ -61,8 +67,11 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
     @Override
     public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
         List<CouchPatientImpl> patients = allCouchPatients.findByMotechId(currentMotechId);
+        MotechIdReservation motechIdReservation = allMotechIdReservations.findByMotechId(currentMotechId);
 
-        if (CollectionUtils.isNotEmpty(patients)) {
+        if (CollectionUtils.isNotEmpty(patients) && motechIdReservation != null && !currentMotechId.equals(patient.getMotechId())) {
+            allMotechIdReservations.remove(motechIdReservation);
+            allMotechIdReservations.addMotechIdReservation(new MotechIdReservation(patient.getMotechId()));
             CouchPatientImpl patientToUpdate = patients.get(0);
             patientToUpdate.setMotechId(patient.getMotechId());
             allCouchPatients.update(patientToUpdate);
@@ -173,6 +182,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
     @Override
     public void deletePatient(MRSPatient patient) throws PatientNotFoundException {
         List<CouchPatientImpl> patients = allCouchPatients.findByMotechId(patient.getMotechId());
+        MotechIdReservation motechIdReservation = allMotechIdReservations.findByMotechId(patient.getMotechId());
 
         if (patients == null || patients.size() == 0) {
             throw new PatientNotFoundException("The patient by motech Id: " + patient.getMotechId() + " was not found in the database.");
@@ -181,6 +191,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
         allCouchPersons.remove(personToRemove);
 
         allCouchPatients.remove(patients.get(0));
+        allMotechIdReservations.remove(motechIdReservation);
         eventRelay.sendEventMessage(new MotechEvent(EventKeys.DELETED_PATIENT_SUBJECT, EventHelper.patientParameters(patient)));
     }
 

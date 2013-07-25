@@ -78,7 +78,7 @@ public class MrsActionProxyServiceImpl implements MrsActionProxyService {
 
     @Override
     public void createEncounter(String motechId, String facilityId, String userId, String providerId, DateTime encounterDate,
-                                String encounterType, DateTime observationDate, String conceptName, String patientId, Object value) {
+                                String encounterType, DateTime observationDate, String conceptName, String patientId, String value) {
         MRSPatient patient = patientAdapters.get(0).getPatient(motechId);
         MRSFacility facility = facilityAdapters.get(0).getFacility(facilityId);
         MRSUser user = userAdapters.get(0).getUserByUserName(userId);

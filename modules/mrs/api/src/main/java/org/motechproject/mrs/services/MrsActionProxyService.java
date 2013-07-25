@@ -14,7 +14,7 @@ public interface MrsActionProxyService {
     void deletePatient(String motechId) throws PatientNotFoundException;
 
     void createEncounter(String motechId, String facilityId, String userId, String providerId, DateTime encounterDate,
-                         String encounterType, DateTime observationDate, String conceptName, String patientId, Object value);
+                         String encounterType, DateTime observationDate, String conceptName, String patientId, String value);
 
     void createFacility(String name, String country, String region, String countyDistrict, String stateProvince);
 

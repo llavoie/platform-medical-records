@@ -622,8 +622,9 @@
              "displayName" : "mrs.provider.field.providerId"
            },
            {
-             "key" : "EncounterName",
-             "displayName" : "mrs.encounter.field.name"
+             "key" : "EncounterDate",
+             "type" : "DATE",
+             "displayName" : "mrs.encounter.field.encounterDate"
            },
            {
              "key" : "EncounterType",

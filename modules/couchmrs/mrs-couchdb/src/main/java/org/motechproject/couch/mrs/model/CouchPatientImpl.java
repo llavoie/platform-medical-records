@@ -12,8 +12,6 @@ public class CouchPatientImpl extends MotechBaseDataObject {
     private static final long serialVersionUID = 1L;
 
     @JsonProperty
-    private String patientId;
-    @JsonProperty
     private String facilityId;
 
     @JsonProperty
@@ -30,7 +28,9 @@ public class CouchPatientImpl extends MotechBaseDataObject {
 
     public CouchPatientImpl(String patientId, String motechId, String personId, String facilityId) {
         this();
-        this.patientId = patientId;
+        if (patientId != null) {
+            setId(patientId);
+        }
         this.motechId = motechId;
         this.personId = personId;
         this.facilityId = facilityId;
@@ -53,11 +53,11 @@ public class CouchPatientImpl extends MotechBaseDataObject {
     }
 
     public String getPatientId() {
-        return patientId;
+        return getId();
     }
 
     public void setPatientId(String patientId) {
-        this.patientId = patientId;
+        setId(patientId);
     }
 
     public String getFacilityId() {

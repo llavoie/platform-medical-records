@@ -9,6 +9,7 @@ import org.motechproject.mrs.domain.MRSAttribute;
 import org.motechproject.mrs.domain.MRSFacility;
 import org.motechproject.mrs.domain.MRSPatient;
 import org.motechproject.mrs.domain.MRSPerson;
+import org.motechproject.mrs.exception.MRSException;
 import org.motechproject.mrs.exception.PatientNotFoundException;
 import org.motechproject.mrs.helper.EventHelper;
 import org.motechproject.mrs.services.MRSPatientAdapter;
@@ -123,6 +124,9 @@ public class OpenMRSPatientAdapter implements MRSPatientAdapter {
 
     @Override
     public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
+        if(!patient.getMotechId().equals(currentMotechId) && getPatientByMotechId(patient.getMotechId()) != null) {
+            throw new MRSException("Patient with Motech ID" + patient.getMotechId() + "already exists.");
+        }
         return updatePatient(patient, getOpenmrsPatientByMotechId(currentMotechId));
     }
 

@@ -54,7 +54,7 @@ public class AllCouchPatientsIT extends SpringIntegrationTest {
         CouchPatientImpl patient = new CouchPatientImpl("patientId", "MotechID", "personIdBeforeUpdate", "facilityId");
         allCouchPatients.addPatient(patient);
 
-        CouchPatientImpl patient2 = new CouchPatientImpl("patientId2", "MotechID", "personIdAfterUpdate", "facilityId2");
+        CouchPatientImpl patient2 = new CouchPatientImpl(null, "MotechID", "personIdAfterUpdate", "facilityId2");
         allCouchPatients.addPatient(patient2);
 
         List<CouchPatientImpl> patientsRetrieved = allCouchPatients.findByMotechId("MotechID");
@@ -63,7 +63,7 @@ public class AllCouchPatientsIT extends SpringIntegrationTest {
 
         assertEquals(patientRetrieved.getMotechId(), "MotechID");
         assertEquals(patientRetrieved.getPersonId(),"personIdAfterUpdate");
-        assertEquals(patientRetrieved.getPatientId(), "patientId2");
+        assertEquals(patientRetrieved.getPatientId(), "patientId");
         assertEquals(patientRetrieved.getFacilityId(), "facilityId2");
     }
 

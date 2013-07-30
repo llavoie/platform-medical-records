@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -113,9 +114,9 @@ public class MrsActionProxyServiceTest {
         setAllData();
         when(facilityAdapter.getFacility(FACILITY_ID)).thenReturn(facility);
         doReturn(persons).when(personAdapter).findByPersonId(PERSON_ID);
-        mrsEventHandler.updatePatient(PATIENT_ID, MOTECH_ID, FACILITY_ID, PERSON_ID);
+        mrsEventHandler.updatePatient(PATIENT_ID, MOTECH_ID, FACILITY_ID, PERSON_ID, MOTECH_ID);
         ArgumentCaptor<MRSPatient> patientArgumentCaptor = ArgumentCaptor.forClass(MRSPatient.class);
-        verify(patientAdapter).updatePatient(patientArgumentCaptor.capture());
+        verify(patientAdapter).updatePatient(patientArgumentCaptor.capture(), eq(MOTECH_ID));
         MRSPatient patient = patientArgumentCaptor.getValue();
         assertEquals(FACILITY_ID, patient.getFacility().getFacilityId());
         assertEquals(MOTECH_ID, patient.getMotechId());

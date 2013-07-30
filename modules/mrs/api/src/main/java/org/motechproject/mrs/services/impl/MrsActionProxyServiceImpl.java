@@ -54,7 +54,7 @@ public class MrsActionProxyServiceImpl implements MrsActionProxyService {
     }
 
     @Override
-    public void updatePatient(String patientId, String motechId, String facilityId, String personId) {
+    public void updatePatient(String patientId, String motechId, String facilityId, String personId, String currentMotechId) {
         MRSFacility facility = null;
         if (facilityId != null) {
             facility = facilityAdapters.get(0).getFacility(facilityId);
@@ -63,7 +63,7 @@ public class MrsActionProxyServiceImpl implements MrsActionProxyService {
         if (personId != null) {
             person = personAdapters.get(0).findByPersonId(personId).get(0);
         }
-        patientAdapters.get(0).updatePatient(new MRSPatientDto(patientId, facility, person, motechId));
+        patientAdapters.get(0).updatePatient(new MRSPatientDto(patientId, facility, person, motechId), currentMotechId);
     }
 
     @Override

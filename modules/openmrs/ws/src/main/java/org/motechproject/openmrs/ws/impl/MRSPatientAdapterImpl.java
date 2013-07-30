@@ -255,6 +255,9 @@ public class MRSPatientAdapterImpl implements MRSPatientAdapter {
 
     @Override
     public MRSPatient updatePatient(MRSPatient patient, String currentMotechId) {
+        if(!patient.getMotechId().equals(currentMotechId) && getPatientByMotechId(patient.getMotechId()) != null) {
+            throw new MRSException("Patient with Motech ID" + patient.getMotechId() + "already exists.");
+        }
         return updatePatient(patient);
     }
 

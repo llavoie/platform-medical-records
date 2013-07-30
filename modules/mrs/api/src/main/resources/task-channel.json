@@ -13,12 +13,12 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "eventKey" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "eventKey" : "MotechId",
           "displayName" : "mrs.motechId"
+        },
+        {
+          "eventKey" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
         },
         {
           "eventKey" : "PersonId",
@@ -35,12 +35,12 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "eventKey" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "eventKey" : "MotechId",
           "displayName" : "mrs.motechId"
+        },
+        {
+          "eventKey" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
         },
         {
           "eventKey" : "PersonId",
@@ -57,12 +57,12 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "eventKey" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "eventKey" : "MotechId",
           "displayName" : "mrs.motechId"
+        },
+        {
+          "eventKey" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
         },
         {
           "eventKey" : "PersonId",
@@ -79,12 +79,12 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "eventKey" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "eventKey" : "MotechId",
           "displayName" : "mrs.motechId"
+        },
+        {
+          "eventKey" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
         },
         {
           "eventKey" : "PersonId",
@@ -529,12 +529,12 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "key" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "key" : "MotechId",
           "displayName" : "mrs.motechId"
+        },
+        {
+          "key" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
         },
         {
           "key" : "PersonId",
@@ -552,16 +552,20 @@
           "displayName" : "mrs.patient.field.patientId"
         },
         {
-          "key" : "FacilityId",
-          "displayName" : "mrs.facility.field.facilityId"
-        },
-        {
           "key" : "MotechId",
           "displayName" : "mrs.motechId"
         },
         {
+          "key" : "FacilityId",
+          "displayName" : "mrs.facility.field.facilityId"
+        },
+        {
           "key" : "PersonId",
           "displayName" : "mrs.person.field.personId"
+        },
+        {
+          "key" : "CurrentMotechId",
+          "displayName" : "mrs.currentMotechId"
         }
       ]
     },

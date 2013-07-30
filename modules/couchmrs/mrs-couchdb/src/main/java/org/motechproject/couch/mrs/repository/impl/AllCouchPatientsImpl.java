@@ -57,7 +57,6 @@ public class AllCouchPatientsImpl extends MotechBaseRepository<CouchPatientImpl>
 
     private void updateFields(CouchPatientImpl couchPatient, CouchPatientImpl patient) {
         couchPatient.setFacilityId(patient.getFacilityId());
-        couchPatient.setPatientId(patient.getPatientId());
         couchPatient.setPersonId(patient.getPersonId());
     }
 
@@ -67,7 +66,7 @@ public class AllCouchPatientsImpl extends MotechBaseRepository<CouchPatientImpl>
     }
 
     @Override
-    @View(name = "by_patientId", map = "function(doc) { if (doc.type ==='Patient') { emit(doc.patientId, doc._id); }}")
+    @View(name = "by_patientId", map = "function(doc) { if (doc.type ==='Patient') { emit(doc._id, doc._id); }}")
     public List<CouchPatientImpl> findByPatientId(String patientId) {
         if (patientId == null) {
             return null;

@@ -7,7 +7,7 @@ public interface MrsActionProxyService {
 
     void createPatient(String patientId, String motechId, String facilityId, String personId);
 
-    void updatePatient(String patientId, String motechId, String facilityId, String personId);
+    void updatePatient(String patientId, String motechId, String facilityId, String personId, String currentMotechId);
 
     void deceasePatient(String motechId, String conceptName, DateTime dateOfDeath, String comment) throws PatientNotFoundException;
 

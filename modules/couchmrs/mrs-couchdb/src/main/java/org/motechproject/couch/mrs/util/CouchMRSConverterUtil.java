@@ -140,7 +140,7 @@ public final class CouchMRSConverterUtil {
     public static List<MRSAttribute> createAttributeList(MRSPerson person) {
         List<MRSAttribute> attributeList = new ArrayList<>();
 
-        if (person != null) {
+        if (person != null && person.getAttributes() != null) {
             for (MRSAttribute attribute : person.getAttributes()) {
                 CouchAttribute couchAttribute = new CouchAttribute();
                 couchAttribute.setName(attribute.getName());

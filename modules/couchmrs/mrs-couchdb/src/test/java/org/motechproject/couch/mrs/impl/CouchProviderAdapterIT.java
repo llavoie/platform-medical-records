@@ -89,8 +89,18 @@ public class CouchProviderAdapterIT extends SpringIntegrationTest {
     }
 
     @Test
-    public void shouldRemoveProvider() throws MRSCouchException, InterruptedException {
+    public void shouldRemoveProviderWithNoPerson() throws InterruptedException {
+        createAndRemoveProvider(null, true);
+    }
+
+    @Test
+    public void shouldRemoveProviderWithPerson() throws MRSCouchException, InterruptedException {
         CouchPerson person = init.initializePerson1();
+
+        createAndRemoveProvider(person, false);
+    }
+
+    private void createAndRemoveProvider(CouchPerson person, boolean isNull) throws InterruptedException {
 
         CouchProvider provider = new CouchProvider("providerId", person);
 
@@ -102,10 +112,15 @@ public class CouchProviderAdapterIT extends SpringIntegrationTest {
         MRSProvider retrievedProvider = providerAdapter.getProviderByProviderId("providerId");
 
         assertEquals(retrievedProvider.getProviderId(), "providerId");
-        assertNotNull(retrievedProvider.getPerson());
+
+        if (isNull) {
+            assertNull(retrievedProvider.getPerson());
+        } else {
+            assertNotNull(retrievedProvider.getPerson());
+            assertEquals(retrievedProvider.getPerson().getPersonId(), mrsListener.eventParameters.get(EventKeys.PERSON_ID));
+        }
 
         assertEquals(retrievedProvider.getProviderId(), mrsListener.eventParameters.get(EventKeys.PROVIDER_ID));
-        assertEquals(retrievedProvider.getPerson().getPersonId(), mrsListener.eventParameters.get(EventKeys.PERSON_ID));
         assertTrue(mrsListener.created);
 
         synchronized (lock) {

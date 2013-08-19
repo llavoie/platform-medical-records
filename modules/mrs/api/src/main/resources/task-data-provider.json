@@ -6,15 +6,15 @@
             "type": "Patient",
             "lookupFields": [
                 {
-                    "displayName": "id",
+                    "displayName": "mrs.id",
                     "fields": [
-                        "id"
+                        "mrs.id"
                     ]
                 },
                 {
-                    "displayName": "motechId",
+                    "displayName": "mrs.patient.motechId",
                     "fields": [
-                        "motechId"
+                        "mrs.motechId"
                     ]
                 }
             ],
@@ -38,9 +38,9 @@
             "type": "Person",
             "lookupFields": [
                 {
-                    "displayName": "id",
+                    "displayName": "mrs.id",
                     "fields": [
-                        "id"
+                        "mrs.id"
                     ]
                 }
             ],
@@ -103,9 +103,9 @@
             "type": "Facility",
             "lookupFields": [
                 {
-                    "displayName": "id",
+                    "displayName": "mrs.id",
                     "fields": [
-                        "id"
+                        "mrs.id"
                     ]
                 }
             ],

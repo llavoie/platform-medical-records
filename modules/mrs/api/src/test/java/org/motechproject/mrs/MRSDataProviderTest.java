@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class MRSDataProviderTest {
-    private static final String FIELD_KEY = "id";
+    private static final String FIELD_KEY = "mrs.id";
     private static final String FIELD_VALUE = "12345";
 
     private static Map<String, String> lookupFields;

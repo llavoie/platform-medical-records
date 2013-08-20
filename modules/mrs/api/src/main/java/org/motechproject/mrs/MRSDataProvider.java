@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MRSDataProvider extends AbstractDataProvider {
-    private static final String ID_FIELD = "id";
-    private static final String MOTECH_ID_FIELD = "motechId";
+    private static final String ID_FIELD = "mrs.id";
+    private static final String MOTECH_ID_FIELD = "mrs.motechId";
 
     private List<MRSPatientAdapter> patientAdapters;
     private List<MRSFacilityAdapter> facilityAdapters;

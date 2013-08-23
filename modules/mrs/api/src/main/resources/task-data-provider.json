@@ -3,7 +3,7 @@
     "objects": [
         {
             "displayName": "mrs.patient.name",
-            "type": "Patient",
+            "type": "MRSPatient",
             "lookupFields": [
                 {
                     "displayName": "mrs.id",
@@ -35,7 +35,7 @@
         },
         {
             "displayName": "mrs.person.name",
-            "type": "Person",
+            "type": "MRSPerson",
             "lookupFields": [
                 {
                     "displayName": "mrs.id",
@@ -100,7 +100,7 @@
         },
         {
             "displayName": "mrs.facility.name",
-            "type": "Facility",
+            "type": "MRSFacility",
             "lookupFields": [
                 {
                     "displayName": "mrs.id",

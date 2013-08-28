@@ -26,6 +26,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Implementation of MRSPatientAdapter.
+ * Adapter for patient database in CouchDB, supports managing and searching patients.
+ *
+ * @see MRSPatientAdapter
+ * @see CouchPatientImpl
+ */
 @Component
 public class CouchPatientAdapter implements MRSPatientAdapter {
 
@@ -53,10 +60,16 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
 
         try {
             allMotechIdReservations.addMotechIdReservation(new MotechIdReservation(patient.getMotechId()));
+            List<CouchPerson> couchPersonList = allCouchPersons.findByPersonId(couchPerson.getPersonId());
             allCouchPersons.addPerson(couchPerson);
             couchPatient.setPersonId(couchPerson.getPersonId());
             allCouchPatients.addPatient(couchPatient);
             eventRelay.sendEventMessage(new MotechEvent(EventKeys.CREATED_NEW_PATIENT_SUBJECT, EventHelper.patientParameters(patient)));
+            if (couchPersonList == null || couchPersonList.isEmpty()) {
+                eventRelay.sendEventMessage(new MotechEvent(EventKeys.CREATED_NEW_PERSON_SUBJECT, EventHelper.personParameters(patient.getPerson())));
+            } else {
+                eventRelay.sendEventMessage(new MotechEvent(EventKeys.UPDATED_PERSON_SUBJECT, EventHelper.personParameters(patient.getPerson())));
+            }
         } catch (MRSCouchException e) {
             return null;
         }
@@ -105,6 +118,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
             personToUpdate.setPreferredName(patient.getPerson().getPreferredName());
             personToUpdate.setAttributes(attributeList);
             allCouchPersons.update(personToUpdate);
+            eventRelay.sendEventMessage(new MotechEvent(EventKeys.UPDATED_PERSON_SUBJECT, EventHelper.personParameters(patient.getPerson())));
 
             patientToUpdate.setMotechId(patient.getMotechId());
             patientToUpdate.setPatientId(patient.getPatientId());
@@ -171,6 +185,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
 
         allCouchPersons.update(personToUpdate);
         eventRelay.sendEventMessage(new MotechEvent(EventKeys.PATIENT_DECEASED_SUBJECT, EventHelper.patientParameters(daoBroker.buildFullPatient(patients))));
+        eventRelay.sendEventMessage(new MotechEvent(EventKeys.UPDATED_PERSON_SUBJECT, EventHelper.personParameters(personToUpdate)));
     }
 
 
@@ -189,6 +204,7 @@ public class CouchPatientAdapter implements MRSPatientAdapter {
         }
         CouchPerson personToRemove = allCouchPersons.findByPersonId(patients.get(0).getPersonId()).get(0);
         allCouchPersons.remove(personToRemove);
+        eventRelay.sendEventMessage(new MotechEvent(EventKeys.DELETED_PERSON_SUBJECT, EventHelper.personParameters(personToRemove)));
 
         allCouchPatients.remove(patients.get(0));
         allMotechIdReservations.remove(motechIdReservation);

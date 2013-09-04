@@ -49,14 +49,9 @@ public class CouchDAOBroker {
 
         MRSFacility facility = null;
 
-        //        String creatorId = encounter.getCreatorId();
         String patientId = encounter.getPatientId();
         String providerId = encounter.getProviderId();
         String facilityId = encounter.getFacilityId();
-
-        //        if (creatorId != null && creatorId.trim().length() > 0) {
-        //            //Currently no user implementation
-        //        }
 
         patient = buildFullPatient(allPatients.findByMotechId(patientId));
 

@@ -48,11 +48,9 @@
     <rule name="DontImportInternal"
           message="Avoid importing internal packages of any external libraries"
           class="net.sourceforge.pmd.rules.XPathRule">
-
     <description>
         Avoid importing any internal package of any external libraries.
     </description>
-
     <properties>
         <property name="xpath">
             <value>
@@ -65,5 +63,18 @@
         </property>
     </properties>
     <priority>3</priority>
+    </rule>
+    <rule name="CommentedOutCode"
+          message="Avoid commeneted out code."
+          class="CommentedOutCode">
+        <properties>
+            <property name="classificationThreshold" value="0.85"/>
+            <property name="skipCheckSequence" value="cmt"/>
+            <property name="skipJavaDocs" value="true"/>
+        </properties>
+        <description>
+            Don't you dare commit commented out code!
+        </description>
+        <priority>3</priority>
     </rule>
 </ruleset>

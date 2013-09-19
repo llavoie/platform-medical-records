@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.motechproject.commons.date.util.DateUtil;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSEncounter;
@@ -74,7 +74,7 @@ public class OpenMRSEncounterAdapterIT extends OpenMRSIntegrationTestBase {
     @Autowired
     OpenMRSUserAdapter userAdapter;
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     MRSFacility facility;
     MRSPatient patientAlan;

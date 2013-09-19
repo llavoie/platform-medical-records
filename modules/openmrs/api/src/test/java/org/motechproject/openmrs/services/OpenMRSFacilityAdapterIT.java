@@ -3,7 +3,7 @@ package org.motechproject.openmrs.services;
 import org.junit.Test;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSFacility;
@@ -34,7 +34,7 @@ public class OpenMRSFacilityAdapterIT extends OpenMRSIntegrationTestBase {
     LocationService mrsLocationService;
 
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     MrsListener mrsListener;
     final Object lock = new Object();

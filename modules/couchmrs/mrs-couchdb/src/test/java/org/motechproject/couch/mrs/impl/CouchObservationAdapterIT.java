@@ -13,10 +13,9 @@ import org.motechproject.couch.mrs.repository.AllCouchEncounters;
 import org.motechproject.couch.mrs.repository.impl.AllCouchEncountersImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
-import org.motechproject.mrs.domain.MRSEncounter;
 import org.motechproject.mrs.domain.MRSObservation;
 import org.motechproject.mrs.exception.ObservationNotFoundException;
 import org.motechproject.testing.utils.SpringIntegrationTest;
@@ -30,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,7 +42,7 @@ public class CouchObservationAdapterIT extends SpringIntegrationTest {
     private AllCouchEncounters allCouchEncounters;
 
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     MrsListener mrsListener;
     final Object lock = new Object();

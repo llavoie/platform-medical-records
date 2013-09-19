@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSPatient;
@@ -45,7 +45,7 @@ public abstract class AbstractPatientAdapterIT {
     private MRSPatientAdapter patientAdapter;
 
     @Autowired
-    private EventListenerRegistry eventListenerRegistry;
+    private EventListenerRegistryService eventListenerRegistry;
 
     MrsListener mrsListener;
     final Object lock = new Object();

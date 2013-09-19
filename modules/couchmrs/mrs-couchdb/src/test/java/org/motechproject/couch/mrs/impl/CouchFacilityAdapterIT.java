@@ -6,13 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.motechproject.couch.mrs.model.CouchFacility;
-import org.motechproject.couch.mrs.model.Initializer;
 import org.motechproject.couch.mrs.model.MRSCouchException;
 import org.motechproject.couch.mrs.repository.AllCouchFacilities;
 import org.motechproject.couch.mrs.repository.impl.AllCouchFacilitiesImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.testing.utils.SpringIntegrationTest;
@@ -44,7 +43,7 @@ public class CouchFacilityAdapterIT extends SpringIntegrationTest {
     private AllCouchFacilities allFacilities;
 
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     @Autowired
     @Qualifier("couchPatientDatabaseConnector")

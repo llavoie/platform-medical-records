@@ -23,7 +23,7 @@ import org.motechproject.couch.mrs.repository.impl.AllCouchPatientsImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchProvidersImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSEncounter;
@@ -60,7 +60,7 @@ public class CouchEncounterAdapterIT extends SpringIntegrationTest {
     private AllCouchProviders allProviders;
 
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     MrsListener mrsListener;
     final Object lock = new Object();

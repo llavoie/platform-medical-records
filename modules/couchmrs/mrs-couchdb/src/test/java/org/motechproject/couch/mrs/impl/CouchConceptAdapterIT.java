@@ -12,7 +12,7 @@ import org.motechproject.couch.mrs.repository.AllCouchConcepts;
 import org.motechproject.couch.mrs.repository.impl.AllCouchConceptsImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.testing.utils.SpringIntegrationTest;
@@ -51,7 +51,7 @@ public class CouchConceptAdapterIT extends SpringIntegrationTest {
     private AllCouchConcepts allConcepts;
 
     @Autowired
-    EventListenerRegistry eventListenerRegistry;
+    EventListenerRegistryService eventListenerRegistry;
 
     @Autowired
     @Qualifier("couchConceptDatabaseConnector")

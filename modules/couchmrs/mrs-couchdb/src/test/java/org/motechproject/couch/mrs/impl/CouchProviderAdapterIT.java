@@ -15,7 +15,7 @@ import org.motechproject.couch.mrs.repository.impl.AllCouchPersonsImpl;
 import org.motechproject.couch.mrs.repository.impl.AllCouchProvidersImpl;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.event.listener.EventListener;
-import org.motechproject.event.listener.EventListenerRegistry;
+import org.motechproject.event.listener.EventListenerRegistryService;
 import org.motechproject.event.listener.annotations.MotechListener;
 import org.motechproject.mrs.EventKeys;
 import org.motechproject.mrs.domain.MRSProvider;
@@ -48,7 +48,7 @@ public class CouchProviderAdapterIT extends SpringIntegrationTest {
     private AllCouchPersons allPersons;
 
     @Autowired
-    private EventListenerRegistry eventListenerRegistry;
+    private EventListenerRegistryService eventListenerRegistry;
 
     private Initializer init;
     private MrsListener mrsListener;

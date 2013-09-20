@@ -4,7 +4,7 @@
 
     <groupId>org.motechproject</groupId>
     <artifactId>platform-medical-records</artifactId>
-    <version>0.21</version>
+    <version>0.21.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>MOTECH Platform Medical Records</name>
 
@@ -1681,6 +1681,6 @@
         <connection>${scm.connection}</connection>
         <developerConnection>${scm.developerConnection}</developerConnection>
         <url>${scm.url}</url>
-        <tag>platform-medical-records-0.21</tag>
+        <tag>0.21.X</tag>
     </scm>
 </project>

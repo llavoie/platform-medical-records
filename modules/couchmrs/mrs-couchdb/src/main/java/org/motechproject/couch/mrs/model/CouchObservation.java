@@ -17,7 +17,6 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.joda.time.DateTime;
 import org.motechproject.commons.date.util.DateUtil;
-import org.motechproject.couch.mrs.util.CouchMRSConverterUtil;
 import org.motechproject.mrs.domain.MRSObservation;
 import ch.lambdaj.Lambda;
 
@@ -118,7 +117,7 @@ public class CouchObservation<T> implements MRSObservation<T> {
             Iterator<MRSObservation> iterator = dependantObservations.iterator();
             while (iterator.hasNext()) {
                 MRSObservation obs = iterator.next();
-                this.dependantObservations.add(CouchMRSConverterUtil.convertObservationToCouchObservation(obs));
+                this.dependantObservations.add(convertObservationToCouchObservation(obs));
             }
         }
     }
@@ -130,7 +129,7 @@ public class CouchObservation<T> implements MRSObservation<T> {
             dependantObservations.remove(existingObservationList.get(0));
         }
 
-        dependantObservations.add(CouchMRSConverterUtil.convertObservationToCouchObservation(mrsObservation));
+        dependantObservations.add(convertObservationToCouchObservation(mrsObservation));
     }
 
     @Override
@@ -151,5 +150,27 @@ public class CouchObservation<T> implements MRSObservation<T> {
                 ", conceptName='" + conceptName + '\'' +
                 ", value=" + value +
                 '}';
+    }
+
+    public static CouchObservation convertObservationToCouchObservation(MRSObservation obs) {
+        CouchObservation couchObs = new CouchObservation();
+        couchObs.setConceptName(obs.getConceptName());
+        couchObs.setDate(obs.getDate());
+        couchObs.setObservationId(obs.getObservationId());
+        couchObs.setPatientId(obs.getPatientId());
+        couchObs.setValue(obs.getValue());
+
+        Set<? extends MRSObservation> dependantObs = obs.getDependantObservations();
+
+        if (dependantObs != null) {
+            Iterator<? extends MRSObservation> iterator = dependantObs.iterator();
+            while (iterator.hasNext()) {
+                MRSObservation nextObs = iterator.next();
+                nextObs = convertObservationToCouchObservation(nextObs);
+                couchObs.addDependantObservation(nextObs);
+            }
+        }
+
+        return couchObs;
     }
 }

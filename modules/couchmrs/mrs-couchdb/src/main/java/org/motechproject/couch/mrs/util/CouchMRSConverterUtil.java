@@ -2,7 +2,6 @@ package org.motechproject.couch.mrs.util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import org.motechproject.couch.mrs.model.CouchAttribute;
@@ -69,25 +68,7 @@ public final class CouchMRSConverterUtil {
     }
 
     public static CouchObservation convertObservationToCouchObservation(MRSObservation obs) {
-        CouchObservation couchObs = new CouchObservation();
-        couchObs.setConceptName(obs.getConceptName());
-        couchObs.setDate(obs.getDate());
-        couchObs.setObservationId(obs.getObservationId());
-        couchObs.setPatientId(obs.getPatientId());
-        couchObs.setValue(obs.getValue());
-
-        Set<? extends MRSObservation> dependantObs = obs.getDependantObservations();
-
-        if (dependantObs != null) {
-            Iterator<? extends MRSObservation> iterator = dependantObs.iterator();
-            while (iterator.hasNext()) {
-                MRSObservation nextObs = iterator.next();
-                nextObs = convertObservationToCouchObservation(nextObs);
-                couchObs.addDependantObservation(nextObs);
-            }
-        }
-
-        return couchObs;
+        return CouchObservation.convertObservationToCouchObservation(obs);
     }
 
     public static CouchPatientImpl createPatient(MRSPatient patient) {

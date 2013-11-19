@@ -16,7 +16,7 @@
                 <value>classpath:polling-config.properties</value>
             </list>
         </property>
-        <property name="platformSettingsService" ref="platformSettingsServiceOsgi" />
+        <property name="configurationService" ref="configurationServiceOsgi" />
     </bean>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

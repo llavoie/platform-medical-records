@@ -244,7 +244,7 @@
         };
 
         $scope.cssClass = function(prop, option) {
-            var msg = 'control-group';
+            var msg = 'form-group';
 
             if ($scope.isRequired(prop) && !$scope.hasValue(prop, option)) {
                 msg = msg.concat(' error');

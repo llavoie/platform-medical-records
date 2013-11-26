@@ -10,7 +10,7 @@
 }
 
 .mrs .form-horizontal .control-label {
-    width: 200px;
+    //width: 200px;
 }
 
 .mrs .form-horizontal .controls {
@@ -18,8 +18,7 @@
 }
 
 .mrs .form-actions {
-    margin: 0 -20px 0 -20px;
-    padding-left: 240px;
+    margin: 20px -10px 20px -10px;
     background-color: #E3EDF8;
 }
 

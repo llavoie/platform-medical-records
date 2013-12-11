@@ -3,15 +3,78 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-    <context:property-placeholder location="classpath:motech-settings.conf, classpath:openmrs.properties"/>
+    <context:property-placeholder location="classpath:motech-settings.properties, classpath:openmrs.properties" system-properties-mode="OVERRIDE"/>
 
     <import resource="classpath*:META-INF/motech/*.xml"/>
 
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate3.HibernateTransactionManager"
           p:sessionFactory-ref="openMRSSessionFactory" />
+
+    <!-- TODO: temporary solution for IT tests. Find a reason why @Autowired does not work in IT tests -->
+    <context:annotation-config/>
+
+    <util:properties id="couchdbProperties" location="classpath:couchdb.properties"/>
+    <util:properties id="defaultSettings" location="classpath:motech-settings.properties"/>
+    <util:properties id="defaultAnnotations" location="classpath:default-settings-annotations.properties"/>
+
+    <bean id="propertiesConfiguration" class="org.apache.commons.configuration.PropertiesConfiguration"
+          init-method="load">
+        <property name="basePath" value="#{systemProperties['user.home']}/.motech"/>
+        <property name="fileName" value="config-locations.properties"/>
+    </bean>
+
+    <bean id="configLocationFileStore" class="org.motechproject.config.core.filestore.ConfigLocationFileStore">
+        <constructor-arg ref="propertiesConfiguration"/>
+    </bean>
+
+    <bean id="coreConfigurationService" class="org.motechproject.config.core.service.impl.CoreConfigurationServiceImpl">
+        <constructor-arg ref="configFileReaderImpl"/>
+        <constructor-arg ref="environmentImpl"/>
+        <constructor-arg ref="configLocationFileStore"/>
+    </bean>
+
+    <bean id="couchDbManager" class="org.motechproject.commons.couchdb.service.impl.CouchDbManagerImpl">
+        <constructor-arg name="couchdbProperties" ref="couchdbProperties" />
+        <constructor-arg name="coreConfigurationService" ref="coreConfigurationService" />
+    </bean>
+
+    <bean id="settingsDbConnector" factory-bean="couchDbManager" factory-method="getConnector">
+        <constructor-arg value="motech-platform-startup"/>
+    </bean>
+
+    <bean id="propertiesDbConnector" factory-bean="couchDbManager" factory-method="getConnector">
+        <constructor-arg value="motech-module-settings"/>
+    </bean>
+
+    <bean id="allSettings" class="org.motechproject.server.config.repository.AllSettings">
+        <constructor-arg ref="settingsDbConnector"/>
+    </bean>
+
+    <bean id="allModuleProperties" class="org.motechproject.config.repository.AllModuleProperties">
+        <constructor-arg ref="propertiesDbConnector"/>
+    </bean>
+
+    <bean id="resourceLoader" class="org.springframework.context.support.ClassPathXmlApplicationContext"/>
+
+    <bean id="configLoader" class="org.motechproject.server.config.service.ConfigLoader">
+        <property name="resourceLoader" ref="resourceLoader"/>
+        <property name="coreConfigurationService" ref="coreConfigurationService"/>
+    </bean>
+
+    <bean id="configurationService" class="org.motechproject.config.service.impl.ConfigurationServiceImpl">
+        <constructor-arg ref="coreConfigurationService"/>
+        <constructor-arg ref="allSettings"/>
+        <constructor-arg ref="allModuleProperties"/>
+        <constructor-arg ref="configLoader"/>
+        <constructor-arg ref="resourceLoader"/>
+        <property name="defaultConfig" ref="defaultSettings"/>
+        <property name="configAnnotation" ref="defaultAnnotations"/>
+    </bean>
 
 </beans>

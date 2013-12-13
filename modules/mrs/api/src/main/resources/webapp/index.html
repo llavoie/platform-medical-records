@@ -1,12 +1,32 @@
-<div> <!-- Only required for left/right tabs -->
-    <ul id="content-tabs" class="nav nav-tabs mrs">
-        <li ng-class="active('#/patients')"><a  href="#/patients">{{msg('mrs.patients')}}</a></li>
-        <li ng-class="active('#/settings')"><a  href="#/settings">{{msg('mrs.settings')}}</a></li>
-    </ul>
+<div id="inner-center" class="mrs inner-center ui-layout-center ui-layout-pane ui-layout-pane-center">
+    <div class="header-footer-breadcrumb">
+        <ul class="breadcrumb" role="navigation">
+            <li><a role="menu" href=".">{{msg('server.home')}}</a></li>
+            <li><a role="menu" href="#/patients">{{msg('mrs.name')}}</a></li>
+            <li ng-show="active('#/patients')" ng-class="active('#/patients')">{{msg('mrs.patients')}} list</li>
+            <li ng-show="active('#/admin')" ng-class="active('#/admin')">{{msg('mrs.settings')}}</li>
+        </ul>
+    </div>
+    <div class="header-footer">
+        <ul id="content-tabs" class="nav nav-tabs">
+            <li ng-class="active('#/patients')"><a href="#/patients">{{msg('mrs.patients')}}</a></li>
+            <li ng-class="active('#/settings')"><a href="#/settings">{{msg('mrs.settings')}}</a></li>
+        </ul>
+    </div>
+    <div class="ui-layout-content">
+        <div class="tab-content" id="tab-content">
+            <div id="main-content" class="active">
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="tab-content mrs" id="tab-content">
-        <div id="main-content" class="tab-pane active">
-            <div ng-view></div>
+<div id="inner-east" class="mrs inner-east ui-layout-pane ui-layout-pane-east">
+    <div class="header-toolbar header-footer"><i id="tbarCloseEast" class="button icon-caret-right pull-right"></i></div>
+    <div class="ui-layout-content">
+        <div class="inside">
+
         </div>
     </div>
 </div>

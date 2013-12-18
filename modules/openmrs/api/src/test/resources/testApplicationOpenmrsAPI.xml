@@ -60,7 +60,7 @@
         <constructor-arg ref="propertiesDbConnector"/>
     </bean>
 
-    <bean id="resourceLoader" class="org.springframework.context.support.ClassPathXmlApplicationContext"/>
+    <bean id="resourceLoader" class="org.springframework.core.io.DefaultResourceLoader"/>
 
     <bean id="configLoader" class="org.motechproject.server.config.service.ConfigLoader">
         <property name="resourceLoader" ref="resourceLoader"/>

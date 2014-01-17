@@ -33,9 +33,13 @@
         <constructor-arg ref="propertiesConfiguration"/>
     </bean>
 
-    <bean id="coreConfigurationService" class="org.motechproject.config.core.service.impl.CoreConfigurationServiceImpl">
-        <constructor-arg ref="configFileReaderImpl"/>
+    <bean id="bootstrapManager" class="org.motechproject.config.core.bootstrap.impl.BootstrapManagerImpl">
         <constructor-arg ref="environmentImpl"/>
+        <constructor-arg ref="configLocationFileStore"/>
+    </bean>
+
+    <bean id="coreConfigurationService" class="org.motechproject.config.core.service.impl.CoreConfigurationServiceImpl">
+        <constructor-arg ref="bootstrapManager"/>
         <constructor-arg ref="configLocationFileStore"/>
     </bean>
 

@@ -4,7 +4,7 @@
     <parent>
         <artifactId>platform-medical-records</artifactId>
         <groupId>org.motechproject</groupId>
-        <version>0.22</version>
+        <version>0.22.1-SNAPSHOT</version>
         <relativePath>../../../</relativePath>
     </parent>
     <groupId>org.motechproject</groupId>

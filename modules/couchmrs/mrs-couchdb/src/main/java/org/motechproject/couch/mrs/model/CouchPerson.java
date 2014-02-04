@@ -58,8 +58,9 @@ public class CouchPerson extends MotechBaseDataObject implements MRSPerson {
         this.setType(type);
     }
 
-    public CouchPerson(String personId, String firstName, String middleName, String lastName, String preferredName, String address,
-                       DateTime dateOfBirth, Boolean birthDateEstimated, Integer age, String gender, Boolean dead,
+    public CouchPerson(String personId, String firstName, String middleName, // NO CHECKSTYLE ParameterNumber
+                       String lastName, String preferredName, String address, DateTime dateOfBirth,
+                       Boolean birthDateEstimated, Integer age, String gender, Boolean dead,
                        List<MRSAttribute> attributes, DateTime deathDate) {
         super();
         this.setType(type);

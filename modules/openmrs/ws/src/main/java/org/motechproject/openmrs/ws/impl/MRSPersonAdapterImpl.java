@@ -62,7 +62,7 @@ public class MRSPersonAdapterImpl implements MRSPersonAdapter {
     }
 
     @Override
-    public OpenMRSPerson addPerson(MRSPerson personMrs) throws MRSException {
+    public OpenMRSPerson addPerson(MRSPerson personMrs) {
         Validate.notNull(personMrs, "Person canont be null");
         OpenMRSPerson person = ConverterUtils.createPerson(personMrs);
         Person converted = ConverterUtils.convertToPerson(person, true);
@@ -82,8 +82,8 @@ public class MRSPersonAdapterImpl implements MRSPersonAdapter {
     }
 
     @Override
-    public OpenMRSPerson addPerson(String personId, String firstName, String lastName, DateTime dateOfBirth, String gender,
-                                   String address, List<MRSAttribute> attributes) throws MRSException {
+    public OpenMRSPerson addPerson(String personId, String firstName, String lastName, DateTime dateOfBirth,
+                                   String gender, String address, List<MRSAttribute> attributes)  {
         OpenMRSPerson person = new OpenMRSPerson();
         person.setPersonId(personId);
         person.setFirstName(firstName);

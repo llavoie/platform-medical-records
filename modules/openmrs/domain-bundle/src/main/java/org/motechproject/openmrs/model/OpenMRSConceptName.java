@@ -4,7 +4,7 @@ import org.motechproject.mrs.domain.MRSConceptName;
 
 import java.util.Objects;
 
-public class OpenMRSConceptName implements MRSConceptName{
+public class OpenMRSConceptName implements MRSConceptName {
     private String name;
     private String locale = "en";
     private String conceptNameType = "FULLY_SPECIFIED";

@@ -217,7 +217,7 @@
             <property name="severity" value="warning"/>
         </module>
         <module name="EmptyStatement">
-            <property name="severity" value="info"/>
+            <property name="severity" value="error"/>
         </module>
         <module name="RightCurly">
             <property name="severity" value="error"/>

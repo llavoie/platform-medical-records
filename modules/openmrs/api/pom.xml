@@ -32,11 +32,6 @@
         </dependency>
         <dependency>
             <groupId>${motech.groupId}</groupId>
-            <artifactId>motech-platform-event</artifactId>
-            <version>${motech.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${motech.groupId}</groupId>
             <artifactId>motech-testing-utils</artifactId>
             <version>${motech.version}</version>
             <scope>test</scope>

@@ -178,10 +178,7 @@ public class OpenMRSPersonAdapter implements MRSPersonAdapter {
     }
 
     private boolean validatePersonId(String personId) {
-        if (Integer.valueOf(personId) == 1) { //You can't delete or update first person in db
-            return false;
-        } else {
-            return true;
-        }
+        //You can't delete or update first person in db
+        return (Integer.valueOf(personId) != 1);
     }
 }

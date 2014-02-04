@@ -58,7 +58,7 @@ public class CouchConceptAdapter implements MRSConceptAdapter {
         return allCouchConcepts.findByConceptName(name);
     }
 
-    public List<CouchConcept> getAllConcepts(){
+    public List<CouchConcept> getAllConcepts() {
         return allCouchConcepts.getAll();
     }
 

@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
  * Adapter class to get Concepts in OpenMRS
  */
 @Service
-public class OpenMRSConceptAdapter implements MRSConceptAdapter{
+public class OpenMRSConceptAdapter implements MRSConceptAdapter {
 
     @Autowired
     private ConceptService conceptService;
@@ -58,7 +58,7 @@ public class OpenMRSConceptAdapter implements MRSConceptAdapter{
         List<Concept> conceptList = conceptService.getConceptsByName(mrsConcept.getName().getName());
         if (CollectionUtils.isNotEmpty(conceptList)) {
             concept = conceptList.get(0);
-        } else{
+        } else {
             ConceptName conceptName = new ConceptName();
             conceptName.setName(mrsConcept.getName().getName());
             concept.addName(conceptName);
@@ -70,10 +70,10 @@ public class OpenMRSConceptAdapter implements MRSConceptAdapter{
 
     @Override
     public MRSConcept getConcept(String conceptId) {
-        if(conceptId == null) {
+        if (conceptId == null) {
             return null;
         }
-        Concept openMrsConcept = getOpenMrsConcept (conceptId);
+        Concept openMrsConcept = getOpenMrsConcept(conceptId);
         return (openMrsConcept == null) ? null : getMrsConcept(openMrsConcept);
     }
 

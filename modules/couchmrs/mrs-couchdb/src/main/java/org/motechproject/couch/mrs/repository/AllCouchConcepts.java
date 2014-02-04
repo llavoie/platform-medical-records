@@ -1,14 +1,13 @@
 package org.motechproject.couch.mrs.repository;
 
 import org.motechproject.couch.mrs.model.CouchConcept;
-import org.motechproject.couch.mrs.model.MRSCouchException;
 
 import java.util.List;
 
 public interface AllCouchConcepts {
     List<CouchConcept> findByConceptId(String conceptId);
 
-    void addConcept(CouchConcept concept) throws MRSCouchException;
+    void addConcept(CouchConcept concept);
 
     void update(CouchConcept concept);
 

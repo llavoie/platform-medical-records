@@ -14,7 +14,7 @@ import com.google.gson.JsonSerializer;
 
 public final class CouchJsonUtils {
 
-    private CouchJsonUtils() {}
+    private CouchJsonUtils() { }
 
     private static final MotechJsonReader READER = new MotechJsonReader();
     private static Map<Type, Object> providedAdapters = new HashMap<Type, Object>();

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("implReqAdapter")
-public class MRSImplReqAdapterImpl implements MRSImplReqAdapter{
+public class MRSImplReqAdapterImpl implements MRSImplReqAdapter {
 
-    public List<String> getRequired(){
+    public List<String> getRequired() {
         List<String> required = new ArrayList<>();
 
         required.add("motechId");

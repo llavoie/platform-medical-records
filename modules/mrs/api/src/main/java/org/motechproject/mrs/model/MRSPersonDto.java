@@ -31,7 +31,10 @@ public class MRSPersonDto implements MRSPerson {
     public MRSPersonDto() {
     }
 
-    public MRSPersonDto(String personId, String firstName, String middleName, String lastName, String preferredName, String address, DateTime dateOfBirth, Boolean birthDateEstimated, Integer age, String gender, boolean dead, List<MRSAttribute> attributes, DateTime deathDate) {
+    public MRSPersonDto(String personId, String firstName, String middleName,  // NO CHECKSTYLE ParameterNumber
+                        String lastName, String preferredName, String address, DateTime dateOfBirth,
+                        Boolean birthDateEstimated, Integer age, String gender, boolean dead,
+                        List<MRSAttribute> attributes, DateTime deathDate) {
         this.personId = personId;
         this.firstName = firstName;
         this.middleName = middleName;

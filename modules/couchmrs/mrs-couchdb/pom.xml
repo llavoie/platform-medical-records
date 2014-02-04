@@ -73,7 +73,6 @@
                     <instructions>
                         <Blueprint-Enabled>true</Blueprint-Enabled>
                         <Export-Package>
-                            org.motechproject.couch.mrs.service;version=${project.version},
                             org.motechproject.couch.mrs.model;version=${project.version},
                             org.motechproject.couch.mrs.repository;version=${project.version}
                         </Export-Package>

@@ -32,7 +32,9 @@ public class CouchEncounterImpl extends MotechBaseDataObject {
         this.setType(type);
     }
 
-    public CouchEncounterImpl(String encounterId, String providerId, String creatorId, String facilityId, DateTime date, Set<CouchObservation> observations, String patientId, String encounterType) {
+    public CouchEncounterImpl(String encounterId, String providerId, String creatorId, // NO CHECKSTYLE ParameterNumber
+                              String facilityId, DateTime date, Set<CouchObservation> observations, String patientId,
+                              String encounterType) {
         this();
         this.encounterId = encounterId;
         this.providerId = providerId;

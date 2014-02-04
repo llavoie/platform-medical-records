@@ -32,7 +32,9 @@ public class CouchEncounter implements MRSEncounter {
         this.encounterType = encounterType;
     }
 
-    public CouchEncounter(String encounterId, MRSProvider provider, MRSUser creator, MRSFacility facility, DateTime date, Set<? extends MRSObservation> observations, MRSPatient patient, String encounterType) {
+    public CouchEncounter(String encounterId, MRSProvider provider, MRSUser creator, // NO CHECKSTYLE ParameterNumber
+                          MRSFacility facility, DateTime date, Set<? extends MRSObservation> observations,
+                          MRSPatient patient, String encounterType) {
         this(provider, creator, facility, date, observations, patient, encounterType);
         this.encounterId = encounterId;
     }

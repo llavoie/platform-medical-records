@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class AllCouchConceptsImpl extends MotechBaseRepository<CouchConcept> implements AllCouchConcepts{
+public class AllCouchConceptsImpl extends MotechBaseRepository<CouchConcept> implements AllCouchConcepts {
 
     @Autowired
     protected AllCouchConceptsImpl(@Qualifier("couchConceptDatabaseConnector") CouchDbConnector db) {
@@ -33,7 +33,7 @@ public class AllCouchConceptsImpl extends MotechBaseRepository<CouchConcept> imp
     }
 
     @Override
-    public void addConcept(CouchConcept concept) throws MRSCouchException {
+    public void addConcept(CouchConcept concept) {
 
         List<CouchConcept> concepts = findByConceptId(concept.getId());
 

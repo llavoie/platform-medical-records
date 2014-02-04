@@ -77,29 +77,33 @@ public class MrsActionProxyServiceImpl implements MrsActionProxyService {
     }
 
     @Override
-    public void createEncounter(String motechId, String facilityId, String userId, String providerId, DateTime encounterDate,
-                                String encounterType, DateTime observationDate, String conceptName, String patientId, String value) {
+    public void createEncounter(String motechId, String facilityId, String userId, // NO CHECKSTYLE ParameterNumber
+                                String providerId, DateTime encounterDate, String encounterType,
+                                DateTime observationDate, String conceptName, String patientId, String value) {
         MRSPatient patient = patientAdapters.get(0).getPatient(motechId);
         MRSFacility facility = facilityAdapters.get(0).getFacility(facilityId);
         MRSUser user = userAdapters.get(0).getUserByUserName(userId);
         MRSProvider provider = providerAdapters.get(0).getProviderByProviderId(providerId);
         Date obsDate = null;
-        if (observationDate!=null) {
+        if (observationDate != null) {
             obsDate = observationDate.toDate();
         }
         MRSObservation obs = new MRSObservationDto(obsDate, conceptName, patientId, value);
         Set<MRSObservation> observations = new HashSet<>();
         observations.add(obs);
-        encounterAdapters.get(0).createEncounter(new MRSEncounterDto(provider, user, facility, encounterDate.toDate(), observations, patient, encounterType));
+        encounterAdapters.get(0).createEncounter(new MRSEncounterDto(provider, user, facility, encounterDate.toDate(),
+                observations, patient, encounterType));
     }
 
     @Override
-    public void createFacility(String name, String country, String region, String countyDistrict, String stateProvince) {
+    public void createFacility(String name, String country, String region, String countyDistrict,
+                               String stateProvince) {
         facilityAdapters.get(0).saveFacility(new MRSFacilityDto(name, country, region, countyDistrict, stateProvince));
     }
 
     @Override
-    public void updateFacility(String facilityId, String name, String country, String region, String countyDistrict, String stateProvince) {
+    public void updateFacility(String facilityId, String name, String country, String region, String countyDistrict,
+                               String stateProvince) {
         MRSFacilityDto facilityDto = new MRSFacilityDto(name, country, region, countyDistrict, stateProvince);
         facilityDto.setFacilityId(facilityId);
         facilityAdapters.get(0).updateFacility(facilityDto);
@@ -111,21 +115,30 @@ public class MrsActionProxyServiceImpl implements MrsActionProxyService {
     }
 
     @Override
-    public void createPerson(String personId, String firstName, String middleName, String lastName, String preferredName, String address,
-                             DateTime dateOfBirth, String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
-        personAdapters.get(0).addPerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName, address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead), null, deathDate));
+    public void createPerson(String personId, String firstName, String middleName, // NO CHECKSTYLE ParameterNumber
+                             String lastName, String preferredName, String address, DateTime dateOfBirth,
+                             String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
+        personAdapters.get(0).addPerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName,
+                address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead),
+                null, deathDate));
     }
 
     @Override
-    public void updatePerson(String personId, String firstName, String middleName, String lastName, String preferredName, String address,
-                             DateTime dateOfBirth, String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
-        personAdapters.get(0).updatePerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName, address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead), null, deathDate));
+    public void updatePerson(String personId, String firstName, String middleName, // NO CHECKSTYLE ParameterNumber
+                             String lastName, String preferredName, String address, DateTime dateOfBirth,
+                             String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
+        personAdapters.get(0).updatePerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName,
+                address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead),
+                null, deathDate));
     }
 
     @Override
-    public void removePerson(String personId, String firstName, String middleName, String lastName, String preferredName, String address,
-                             DateTime dateOfBirth, String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
-        personAdapters.get(0).removePerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName, address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead), null, deathDate));
+    public void removePerson(String personId, String firstName, String middleName, // NO CHECKSTYLE ParameterNumber
+                             String lastName, String preferredName, String address, DateTime dateOfBirth,
+                             String birthDateEstimated, Integer age, String gender, String dead, DateTime deathDate) {
+        personAdapters.get(0).removePerson(new MRSPersonDto(personId, firstName, middleName, lastName, preferredName,
+                address, dateOfBirth, Boolean.valueOf(birthDateEstimated), age, gender, Boolean.parseBoolean(dead),
+                null, deathDate));
     }
 
     @Override

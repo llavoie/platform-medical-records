@@ -14,7 +14,7 @@ public class OpenMRSConcept implements MRSConcept {
     private String conceptClass;
     private String display;
 
-    public OpenMRSConcept(MRSConceptName name){
+    public OpenMRSConcept(MRSConceptName name) {
         this.name = name;
     }
     @Override

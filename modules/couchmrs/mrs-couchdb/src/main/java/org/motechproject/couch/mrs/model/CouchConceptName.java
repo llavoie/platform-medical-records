@@ -20,7 +20,7 @@ public class CouchConceptName extends MotechBaseDataObject implements MRSConcept
 
     public CouchConceptName(String name) {
         this.setType(type);
-        this.name = name;;
+        this.name = name;
     }
 
     public CouchConceptName(String name, String locale, String conceptNameType) {

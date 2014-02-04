@@ -17,7 +17,7 @@ public interface MRSPersonAdapter {
      * @param person The person to be saved 
      * @throws MRSException Thrown if the person object violated constraints in the implementing module
      */
-    MRSPerson addPerson(MRSPerson person) throws MRSException;
+    MRSPerson addPerson(MRSPerson person);
 
     /**
      * Creates and persists a person object from field values
@@ -31,7 +31,7 @@ public interface MRSPersonAdapter {
      * @throws MRSException Thrown if the person object violated constraints in the implementing module
      */
     MRSPerson addPerson(String personId, String firstName, String lastName, DateTime dateOfBirth, String gender,
-            String address, List<MRSAttribute> attributes) throws MRSException;
+            String address, List<MRSAttribute> attributes);
 
     /**
      * Updates a person object

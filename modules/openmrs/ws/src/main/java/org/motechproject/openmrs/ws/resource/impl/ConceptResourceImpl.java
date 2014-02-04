@@ -33,8 +33,9 @@ public class ConceptResourceImpl implements ConceptResource {
 
     @Override
     public Concept getConceptById(String conceptId) throws HttpException {
-        String responseJson = restClient.getJson(openmrsInstance.toInstancePathWithParams("/concept?q={conceptId}",conceptId));
-        return (Concept) JsonUtils.readJson(responseJson,Concept.class);
+        String responseJson = restClient.getJson(openmrsInstance.toInstancePathWithParams("/concept?q={conceptId}",
+                conceptId));
+        return (Concept) JsonUtils.readJson(responseJson, Concept.class);
     }
 
     @Override

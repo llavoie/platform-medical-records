@@ -2,7 +2,7 @@ package org.motechproject.mrs.model;
 
 import org.motechproject.mrs.domain.MRSConceptName;
 
-public class MRSConceptNameDto implements MRSConceptName{
+public class MRSConceptNameDto implements MRSConceptName {
     private String name;
     private String locale = "en";
     private String conceptNameType = "FULLY_SPECIFIED";

@@ -9,6 +9,8 @@ import java.util.Map;
 
 public abstract class EventBuilderTemplate {
 
+    public static final String UUID_PREFIX = "uuid:";
+    public static final int UUID_PREFIX_LENGTH = UUID_PREFIX.length();
     private final Entry entry;
 
     public EventBuilderTemplate(Entry entry) {
@@ -60,9 +62,9 @@ public abstract class EventBuilderTemplate {
     }
 
     private Object extractEntryUuid(String id) {
-        int index = id.indexOf("uuid:");
+        int index = id.indexOf(UUID_PREFIX);
         if (index >= 0) {
-            return id.substring(index + 5);
+            return id.substring(index + UUID_PREFIX_LENGTH);
         }
 
         return "";

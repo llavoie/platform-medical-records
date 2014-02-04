@@ -4,7 +4,7 @@ import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.motechproject.mrs.domain.MRSConcept;
 import org.motechproject.mrs.domain.MRSConceptName;
 
-public class MRSConceptDto implements MRSConcept{
+public class MRSConceptDto implements MRSConcept {
     @JsonDeserialize(as = MRSConceptNameDto.class)
     private MRSConceptName name;
 

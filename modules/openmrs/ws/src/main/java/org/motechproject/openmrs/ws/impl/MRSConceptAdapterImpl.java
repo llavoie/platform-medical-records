@@ -94,7 +94,7 @@ public class MRSConceptAdapterImpl implements MRSConceptAdapter {
         return converted;
     }
 
-    private void validateConceptBeforeSave(MRSConcept concept){
+    private void validateConceptBeforeSave(MRSConcept concept) {
         Validate.notNull(concept, "Concept cannot be null");
         Validate.notNull(concept.getName(), "Concept name cannot be null");
     }
@@ -204,7 +204,7 @@ public class MRSConceptAdapterImpl implements MRSConceptAdapter {
 
     private List<MRSConcept> toMrsConcept(List<Concept> results) {
         List<MRSConcept> mrsConcepts = new ArrayList<>();
-        for(Concept concept : results) {
+        for (Concept concept : results) {
             mrsConcepts.add(convertToMrsConcept(concept));
         }
 

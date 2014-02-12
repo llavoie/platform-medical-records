@@ -1,4 +1,4 @@
-package org.motechproject.openmrs.rest.osgi;
+package org.motechproject.openmrs.ws.osgi;
 
 import org.motechproject.osgi.web.MotechOsgiWebApplicationContext;
 import org.motechproject.osgi.web.exception.ServletRegistrationException;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class Activator implements BundleActivator {
     private static Logger logger = LoggerFactory.getLogger(Activator.class);
-    private static final String CONTEXT_CONFIG_LOCATION = "applicationOpenMrsWSBundle.xml";
+    private static final String CONTEXT_CONFIG_LOCATION = "applicationOpenMrsWS.xml";
     private static final String SERVLET_URL_MAPPING = "/openmrs-ws";
     private ServiceTracker tracker;
     private ServiceReference httpService;

@@ -1198,7 +1198,6 @@
 
     <modules>
         <!-- Non-OSGI modules -->
-        <module>modules/openmrs/api</module>
         <module>modules/openmrs/atomfeed</module>
         <module>modules/openmrs/omod</module>
         <module>modules/openmrs/ws</module>
@@ -1207,7 +1206,7 @@
         <module>modules/appointments/api</module>
         <module>modules/couchmrs/mrs-couchdb</module>
         <module>modules/mrs/api</module>
-        <module>modules/openmrs/api-bundle</module>
+        <module>modules/openmrs/api</module>
         <module>modules/openmrs/atomfeed-bundle</module>
         <module>modules/openmrs/domain-bundle</module>
         <module>modules/openmrs/ws-bundle</module>

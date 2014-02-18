@@ -68,12 +68,7 @@ public class MRSConceptAdapterImpl implements MRSConceptAdapter {
     @Override
     public MRSConcept saveConcept(MRSConcept concept) {
         validateConceptBeforeSave(concept);
-
         Concept converted = fromMrsConcept(concept);
-        if (converted == null) {
-            return null;
-        }
-
         Concept created = null;
         try {
             created = conceptResource.createConcept(converted);

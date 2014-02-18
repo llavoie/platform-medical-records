@@ -224,10 +224,7 @@ public class MRSEncounterAdapterImpl implements MRSEncounterAdapter {
         // provider
         Map<String, MRSPerson> providers = new HashMap<>();
         for (Encounter encounter : result.getResults()) {
-            providers.put(encounter.getProvider().getUuid(), null);
-        }
-
-        for (String providerUuid : providers.keySet()) {
+            String providerUuid = encounter.getProvider().getUuid();
             OpenMRSPerson provider = personAdapter.findByPersonId(providerUuid).get(0);
             providers.put(providerUuid, provider);
         }

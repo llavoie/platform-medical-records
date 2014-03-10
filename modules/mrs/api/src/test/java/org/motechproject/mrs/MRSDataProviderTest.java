@@ -79,7 +79,7 @@ public class MRSDataProviderTest {
         String clazz = MotechObject.class.getSimpleName();
 
         // when
-        Object object = provider.lookup(clazz, lookupFields);
+        Object object = provider.lookup(clazz, "id", lookupFields);
 
         // then
         assertNull(object);
@@ -92,7 +92,7 @@ public class MRSDataProviderTest {
         HashMap<String, String> fields = new HashMap<>();
 
         // when
-        Object object = provider.lookup(clazz, fields);
+        Object object = provider.lookup(clazz, "id", fields);
 
         // then
         assertNull(object);
@@ -106,9 +106,9 @@ public class MRSDataProviderTest {
         String personClass = MRSPerson.class.getSimpleName();
 
         // when
-        Object patient = provider.lookup(patientClass, lookupFields);
-        Object facility = provider.lookup(facilityClass, lookupFields);
-        Object person = provider.lookup(personClass, lookupFields);
+        Object patient = provider.lookup(patientClass, "id", lookupFields);
+        Object facility = provider.lookup(facilityClass, "id", lookupFields);
+        Object person = provider.lookup(personClass, "id", lookupFields);
 
         // then
         assertNull(patient);
@@ -128,9 +128,9 @@ public class MRSDataProviderTest {
         provider.setPersonAdapters(new ArrayList<MRSPersonAdapter>());
 
         // when
-        Object patient = provider.lookup(patientClass, lookupFields);
-        Object facility = provider.lookup(facilityClass, lookupFields);
-        Object person = provider.lookup(personClass, lookupFields);
+        Object patient = provider.lookup(patientClass, "id", lookupFields);
+        Object facility = provider.lookup(facilityClass, "id", lookupFields);
+        Object person = provider.lookup(personClass, "id", lookupFields);
 
         // then
         assertNull(patient);
@@ -150,9 +150,9 @@ public class MRSDataProviderTest {
         provider.setPersonAdapters(Arrays.asList(personAdapter));
 
         // when
-        MRSPatient patient = (MRSPatient) provider.lookup(patientClass, lookupFields);
-        MRSFacility facility = (MRSFacility) provider.lookup(facilityClass, lookupFields);
-        MRSPerson person = (MRSPerson) provider.lookup(personClass, lookupFields);
+        MRSPatient patient = (MRSPatient) provider.lookup(patientClass, "id", lookupFields);
+        MRSFacility facility = (MRSFacility) provider.lookup(facilityClass, "id", lookupFields);
+        MRSPerson person = (MRSPerson) provider.lookup(personClass, "id", lookupFields);
 
         // then
         assertEquals(this.patient, patient);

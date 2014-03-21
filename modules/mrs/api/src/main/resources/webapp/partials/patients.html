@@ -3,7 +3,7 @@
         <div class="row clearfix">
             <h4 class="frame-title">{{msg('mrs.all.patients')}}</h4>
             <div class="inside form-group form-inline">
-                <span class="margin-right2"><a href="#/mrs/new" role="button" class="btn btn-success"><i class="icon-plus icon-white"></i> {{msg('mrs.add.patient')}}</a></span>
+                <span class="margin-right2"><a href="#/mrs/mrs/new" role="button" class="btn btn-success"><i class="icon-plus icon-white"></i> {{msg('mrs.add.patient')}}</a></span>
                 <label>{{msg('mrs.search.patient')}}</label>
                 <input type="text" ng-model="query" ng-change="search()" class="form-control input-large search-query" placeholder="{{msg('mrs.searchByIdOrName')}}">
                 <span ng-show="filteredItems.length &gt; 10">
@@ -55,16 +55,16 @@
             </div>
             <div class="pagination pagination-centered pagination-condensed lightblue" ng-show="pagedItems.length &gt; 1">
                 <ul>
-                    <li ng-class="{disabled: currentPage == 0}"><a href ng-click="firstPage()">{{msg('pagination.first')}}</a></li>
-                    <li ng-class="{disabled: currentPage == 0}"><a href ng-click="prevPage()">{{msg('pagination.prev')}}</a></li>
+                    <li ng-class="{disabled: currentPage == 0}"><a ng-click="firstPage()">{{msg('pagination.first')}}</a></li>
+                    <li ng-class="{disabled: currentPage == 0}"><a ng-click="prevPage()">{{msg('pagination.prev')}}</a></li>
                     <li ng-repeat="number in range(pagedItems.length)"
                         ng-hide="hidePages(number)"
                         ng-class="{active: number == currentPage}"
                         ng-click="setPage()">
-                        <a href ng-bind="number + 1">1</a>
+                        <a ng-bind="number + 1">1</a>
                     </li>
-                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}"><a href ng-click="nextPage()">{{msg('pagination.next')}}</a></li>
-                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}"><a href ng-click="lastPage(pagedItems.length - 1)">{{msg('pagination.last')}}</a></li>
+                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}"><a ng-click="nextPage()">{{msg('pagination.next')}}</a></li>
+                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}"><a ng-click="lastPage(pagedItems.length - 1)">{{msg('pagination.last')}}</a></li>
                 </ul>
             </div>
         </div>
@@ -75,7 +75,7 @@
     <div class="col-sm-12 col-md-10 margin-after mrs">
         <div class="row inside clearfix">
             <h4>{{msg('mrs.patient.name')}} {{patientDto.person.firstName}} {{patientDto.person.lastName}}</h4>
-            <span class="pull-right"><a class="btn btn-primary" href="#/patients/"> {{msg('mrs.button.back')}}</a></span>
+            <span class="pull-right"><a class="btn btn-primary" href="#/mrs/patients/"> {{msg('mrs.button.back')}}</a></span>
             <div class="form-group clearfix">
                 <span class="pull-left"><h5>{{msg('mrs.patient.motechId')}}: {{patientDto.motechId}}</h5></span>
             </div>
@@ -84,7 +84,7 @@
                 <fieldset>
                     <legend>{{msg('mrs.patientDetails')}}</legend>
                     <div class="form-group inside pull-right">
-                        <a class="btn btn-success" href="#/mrs/{{patientDto.motechId}}/edit">{{msg('mrs.edit.patientDetails')}}</a>
+                        <a class="btn btn-success" href="#/mrs/mrs/{{patientDto.motechId}}/edit">{{msg('mrs.edit.patientDetails')}}</a>
                     </div>
                     <table class="table table-patient">
                         <tbody>
@@ -141,7 +141,7 @@
                 <fieldset>
                     <legend>{{msg('mrs.customAttributes')}}</legend>
                 <div class="form-group inside pull-right">
-                    <a class="btn btn-success" href="#/mrs/{{patientDto.motechId}}/editAttributes">{{msg('mrs.edit.customAttributes')}}</a>
+                    <a class="btn btn-success" href="#/mrs/mrs/{{patientDto.motechId}}/editAttributes">{{msg('mrs.edit.customAttributes')}}</a>
                 </div>
                     <table class="table table-patient">
                         <tbody>

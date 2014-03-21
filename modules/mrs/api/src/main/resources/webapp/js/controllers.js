@@ -2,9 +2,9 @@
     'use strict';
 
     /* Controllers */
-    var mrsModule = angular.module('motech-mrs');
+    var controllers = angular.module('mrs.controllers', []);
 
-    mrsModule.controller('PatientMrsCtrl', function ($scope, Patient, $http, $routeParams, $filter) {
+    controllers.controller('PatientMrsCtrl', function ($scope, Patient, $http, $routeParams, $filter) {
         var searchMatch = function (patient, searchQuery) {
             if (!searchQuery) {
                 return true;
@@ -103,7 +103,7 @@
         };
     });
 
-    mrsModule.controller('SettingsMrsCtrl', function ($scope, $http) {
+    controllers.controller('SettingsMrsCtrl', function ($scope, $http) {
 
         function getMrsProviders() {
             $http.get('../mrs/api/impl/adapters').success(function(data) {
@@ -125,7 +125,7 @@
         };
     });
 
-    mrsModule.controller('ManagePatientMrsCtrl', function ($scope, Patient, $routeParams, $location, $http) {
+    controllers.controller('ManagePatientMrsCtrl', function ($scope, Patient, $routeParams, $location, $http) {
         $scope.patientDto = new Patient();
         $scope.motechIdValidate=true;
         $scope.hideMotechId=true;

@@ -23,15 +23,13 @@
 
     <bean class="org.motechproject.event.listener.annotations.EventAnnotationBeanPostProcessor" />
 
-    <bean id="header" class="org.motechproject.osgi.web.Header" />
-
     <bean id="moduleRegistrationData" class="org.motechproject.osgi.web.ModuleRegistrationData">
         <constructor-arg name="moduleName" value="mrs"/>
         <constructor-arg name="url" value="../mrs/resources/index.html"/>
         <constructor-arg name="moduleName" value="mrs.name"/>
         <constructor-arg name="angularModules">
             <list>
-                <value>motech-mrs</value>
+                <value>mrs</value>
             </list>
         </constructor-arg>
         <constructor-arg name="i18n">
@@ -39,7 +37,6 @@
                 <entry key="messages" value="../mrs/resources/messages/"/>
             </map>
         </constructor-arg>
-        <constructor-arg name="header" ref="header"/>
         <property name="settingsURL" value="/settings" />
     </bean>
 

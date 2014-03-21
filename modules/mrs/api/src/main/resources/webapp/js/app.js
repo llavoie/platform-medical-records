@@ -3,15 +3,14 @@
 
     /* App Module */
 
-    angular.module('motech-mrs', ['motech-dashboard', 'patientService', 'ngCookies', 'ngRoute', 'motech-widgets']).config(['$routeProvider',
+    angular.module('mrs', ['motech-dashboard', 'mrs.controllers', 'mrs.directives', 'mrs.services', 'ngCookies', 'ngRoute', 'motech-widgets']).config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider.
-                when('/patients', {templateUrl: '../mrs/resources/partials/patients.html', controller: 'PatientMrsCtrl'}).
-                when('/patients/:motechId', {templateUrl: '../mrs/resources/partials/patients.html', controller: 'PatientMrsCtrl'}).
-                when('/settings', {templateUrl: '../mrs/resources/partials/settings.html', controller: 'SettingsMrsCtrl'}).
-                when('/mrs/new', {templateUrl: '../mrs/resources/partials/form.html', controller: 'ManagePatientMrsCtrl'}).
-                when('/mrs/:motechId/edit', {templateUrl: '../mrs/resources/partials/form.html', controller: 'ManagePatientMrsCtrl'}).
-                when('/mrs/:motechId/editAttributes', {templateUrl: '../mrs/resources/partials/attributes.html', controller: 'ManagePatientMrsCtrl'}).
-                otherwise({redirectTo: '/patients'});
+                when('/mrs/patients', {templateUrl: '../mrs/resources/partials/patients.html', controller: 'PatientMrsCtrl'}).
+                when('/mrs/patients/:motechId', {templateUrl: '../mrs/resources/partials/patients.html', controller: 'PatientMrsCtrl'}).
+                when('/mrs/settings', {templateUrl: '../mrs/resources/partials/settings.html', controller: 'SettingsMrsCtrl'}).
+                when('/mrs/mrs/new', {templateUrl: '../mrs/resources/partials/form.html', controller: 'ManagePatientMrsCtrl'}).
+                when('/mrs/mrs/:motechId/edit', {templateUrl: '../mrs/resources/partials/form.html', controller: 'ManagePatientMrsCtrl'}).
+                when('/mrs/mrs/:motechId/editAttributes', {templateUrl: '../mrs/resources/partials/attributes.html', controller: 'ManagePatientMrsCtrl'});
         }]);
 }());

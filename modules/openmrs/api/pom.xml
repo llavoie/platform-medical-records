@@ -6,14 +6,14 @@
     <parent>
         <artifactId>platform-medical-records</artifactId>
         <groupId>org.motechproject</groupId>
-        <version>0.23-SNAPSHOT</version>
+        <version>0.24-SNAPSHOT</version>
         <relativePath>../../../</relativePath>
     </parent>
 
     <groupId>org.motechproject</groupId>
 
     <artifactId>motech-openmrs-api</artifactId>
-    <version>0.23-SNAPSHOT</version>
+    <version>0.24-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>MOTECH OpenMRS API</name>

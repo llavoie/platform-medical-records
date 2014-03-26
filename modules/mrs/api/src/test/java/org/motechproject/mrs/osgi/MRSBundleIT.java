@@ -7,7 +7,6 @@ import org.motechproject.mrs.domain.MRSFacility;
 import org.motechproject.mrs.domain.MRSPatient;
 import org.motechproject.mrs.domain.MRSPerson;
 import org.motechproject.testing.osgi.BaseOsgiIT;
-import org.osgi.framework.ServiceReference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,13 +16,9 @@ import static java.util.Arrays.asList;
 public class MRSBundleIT extends BaseOsgiIT {
 
     public void testMRSApiBundle() {
-        assertNotNull(bundleContext.getServiceReference(EventListenerRegistryService.class.getName()));
+        getService(EventListenerRegistryService.class);
 
-        ServiceReference serviceReference = bundleContext.getServiceReference(DataProvider.class.getName());
-        assertNotNull(serviceReference);
-
-        MRSDataProvider providerLookup = (MRSDataProvider) bundleContext.getService(serviceReference);
-        assertNotNull(providerLookup);
+        MRSDataProvider providerLookup = (MRSDataProvider) getService(DataProvider.class);
 
         List<Class<?>> classes = Arrays.asList(MRSPerson.class, MRSPatient.class, MRSFacility.class);
 

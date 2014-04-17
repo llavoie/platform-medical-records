@@ -37,7 +37,8 @@
                 <entry key="messages" value="../mrs/resources/messages/"/>
             </map>
         </constructor-arg>
-        <property name="settingsURL" value="/settings" />
+        <property name="settingsURL" value="/mrs/settings" />
+        <property name="defaultURL" value="/mrs/patients"/>
     </bean>
 
     <osgi:list id="patientAdapterList" interface="org.motechproject.mrs.services.MRSPatientAdapter" availability="optional">

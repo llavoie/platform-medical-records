@@ -13,7 +13,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class Activator implements BundleActivator {
     private static Logger logger = LoggerFactory.getLogger(Activator.class);
-    private static final String CONTEXT_CONFIG_LOCATION = "applicationAtomFeedBundle.xml";
+    private static final String CONTEXT_CONFIG_LOCATION = "applicationAtomFeed.xml";
     private static final String SERVLET_URL_MAPPING = "/openmrs/atomfeed";
     private ServiceTracker tracker;
     private ServiceReference httpService;
@@ -32,6 +32,7 @@ public class Activator implements BundleActivator {
 
             @Override
             public Object addingService(ServiceReference ref) {
+                httpService = ref;
                 Object service = super.addingService(ref);
                 serviceAdded((HttpService) service);
                 return service;

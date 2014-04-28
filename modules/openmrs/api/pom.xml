@@ -10,8 +10,6 @@
         <relativePath>../../../</relativePath>
     </parent>
 
-    <groupId>org.motechproject</groupId>
-
     <artifactId>motech-openmrs-api</artifactId>
     <version>0.24-SNAPSHOT</version>
     <packaging>bundle</packaging>
@@ -252,13 +250,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${user.home}/.motech/config/${project.groupId}.${project.artifactId}/</outputDirectory>
+                            <outputDirectory>${user.home}/.motech/config/${project.groupId}.${project.artifactId}-bundle/openmrs-data</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/</directory>
-                                    <includes>
-                                        <include>openmrs-data/**</include>
-                                    </includes>
+                                    <directory>src/main/resources/openmrs-data</directory>
                                 </resource>
                             </resources>
                         </configuration>

@@ -64,18 +64,20 @@ public class MrsImplementationManager implements OsgiServiceLifecycleListener {
 
     @Override
     public void unbind(Object service, Map serviceProperties) {
-        String bundleSymbolicName = serviceProperties.get("Bundle-SymbolicName").toString();
+        if (serviceProperties != null) {
+            String bundleSymbolicName = serviceProperties.get("Bundle-SymbolicName").toString();
 
-        if (service instanceof MRSPatientAdapter) {
-            patientAdapterMap.remove(bundleSymbolicName);
-        } else if (service instanceof MRSFacilityAdapter) {
-            facilityAdapterMap.remove(bundleSymbolicName);
-        } else if (service instanceof MRSPersonAdapter) {
-            personAdapterMap.remove(bundleSymbolicName);
-        } else if (service instanceof MRSImplReqAdapter) {
-            implReqAdapterMap.remove(bundleSymbolicName);
-        } else if (service instanceof MRSConceptAdapter) {
-            conceptAdapterMap.remove(bundleSymbolicName);
+            if (service instanceof MRSPatientAdapter) {
+                patientAdapterMap.remove(bundleSymbolicName);
+            } else if (service instanceof MRSFacilityAdapter) {
+                facilityAdapterMap.remove(bundleSymbolicName);
+            } else if (service instanceof MRSPersonAdapter) {
+                personAdapterMap.remove(bundleSymbolicName);
+            } else if (service instanceof MRSImplReqAdapter) {
+                implReqAdapterMap.remove(bundleSymbolicName);
+            } else if (service instanceof MRSConceptAdapter) {
+                conceptAdapterMap.remove(bundleSymbolicName);
+            }
         }
     }
 

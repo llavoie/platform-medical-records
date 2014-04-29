@@ -30,11 +30,6 @@ public class MRSBundleIT extends BasePaxIT {
     @Inject
     private BundleContext bundleContext;
 
-    @Override
-    protected boolean shouldFakeModuleStartupEvent() {
-        return true;
-    }
-
     @Test
     public void testMRSApiBundle() {
         MRSDataProvider providerLookup =

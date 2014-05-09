@@ -8,8 +8,8 @@ import org.mockito.Mock;
 import org.motechproject.commons.api.MotechException;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.openmrs.atomfeed.events.EventSubjects;
-import org.motechproject.scheduler.MotechSchedulerService;
-import org.motechproject.scheduler.domain.RepeatingSchedulableJob;
+import org.motechproject.scheduler.service.MotechSchedulerService;
+import org.motechproject.scheduler.contract.RepeatingSchedulableJob;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;

@@ -10,7 +10,7 @@
         interface="org.motechproject.openmrs.atomfeed.service.AtomFeedService" />
 
     <osgi:reference id="schedulerServiceOsgi"
-        interface="org.motechproject.scheduler.MotechSchedulerService" />
+        interface="org.motechproject.scheduler.service.MotechSchedulerService" />
 
     <osgi:reference id="couchDbManager" interface="org.motechproject.commons.couchdb.service.CouchDbManager" />
 

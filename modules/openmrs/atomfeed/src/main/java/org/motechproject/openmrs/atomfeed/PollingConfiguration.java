@@ -5,8 +5,8 @@ import org.joda.time.LocalTime;
 import org.motechproject.commons.api.MotechException;
 import org.motechproject.event.MotechEvent;
 import org.motechproject.openmrs.atomfeed.events.EventSubjects;
-import org.motechproject.scheduler.MotechSchedulerService;
-import org.motechproject.scheduler.domain.RepeatingSchedulableJob;
+import org.motechproject.scheduler.service.MotechSchedulerService;
+import org.motechproject.scheduler.contract.RepeatingSchedulableJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 

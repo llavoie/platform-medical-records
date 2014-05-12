@@ -1,6 +1,7 @@
 package org.motechproject.appointments.domain;
 
 import org.joda.time.DateTime;
+import org.joda.time.Period;
 
 import java.util.Map;
 
@@ -24,12 +25,12 @@ public class Appointment {
     // Status flag to indicate if the appointment was missed
     private AppointmentStatus status;
 
-    // Custom metadata store to use for the implementation
-    private Map<String, Object> metadata;
-
     // Flag to activate or deactivate sending reminders
     private boolean sendReminders;
 
     // Reminder interval in seconds
-    private DateTime reminderIntervalInSeconds;
+    private Period reminderInterval;
+
+    // Time to start firing the reminder events
+    private DateTime reminderStartTime;
 }

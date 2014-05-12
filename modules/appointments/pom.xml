@@ -39,6 +39,11 @@
             <version>${motech.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.motechproject</groupId>
+            <artifactId>motech-scheduler</artifactId>
+            <version>0.23-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <repositories>

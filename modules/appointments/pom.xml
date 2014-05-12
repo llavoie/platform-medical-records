@@ -44,6 +44,26 @@
             <artifactId>motech-scheduler</artifactId>
             <version>0.23-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.motechproject</groupId>
+            <artifactId>motech-dataservices</artifactId>
+            <version>0.23-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.motechproject</groupId>
+            <artifactId>motech-dataservices</artifactId>
+            <version>0.23-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.motechproject</groupId>
+            <artifactId>motech-dataservices</artifactId>
+            <version>0.23-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.motechproject</groupId>
+            <artifactId>motech-dataservices</artifactId>
+            <version>0.23-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <repositories>

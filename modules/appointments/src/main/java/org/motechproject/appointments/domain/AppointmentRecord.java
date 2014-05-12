@@ -1,11 +1,12 @@
 package org.motechproject.appointments.domain;
 
 import org.joda.time.DateTime;
-import org.motechproject.appointments.service.AppointmentService;
+import org.motechproject.mds.annotations.Entity;
 
 /**
  * Created by kosh on 5/12/14.
  */
+@Entity
 public class AppointmentRecord {
 
     // external Id of the patient

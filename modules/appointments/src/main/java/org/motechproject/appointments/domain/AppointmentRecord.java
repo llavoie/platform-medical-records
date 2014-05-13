@@ -10,17 +10,47 @@ import org.motechproject.mds.annotations.Entity;
 public class AppointmentRecord {
 
     // external Id of the patient
-    public String externalId;
+    private String externalId;
 
     // Appointment id being changed
-    public String appointmentId;
+    private String appointmentId;
 
     // date of the Appointment creation/change
-    public DateTime appointmentDate;
+    private DateTime appointmentDate;
 
     // Previous appointment status being changed
-    public AppointmentStatus fromStatus;
+    private AppointmentStatus fromStatus;
 
     // Current appointment status to change to
-    public AppointmentStatus toStatus;
+    private AppointmentStatus toStatus;
+
+    public AppointmentRecord(String externalId, String appointmentId,
+                             DateTime appointmentDate, AppointmentStatus fromStatus, AppointmentStatus toStatus) {
+        this.externalId = externalId;
+        this.appointmentId = appointmentId;
+        this.appointmentDate = appointmentDate;
+        this.fromStatus = fromStatus;
+        this.toStatus = toStatus;
+    }
+
+    // Getters & Setters
+    public String getExternalId() { return this.externalId; }
+
+    public void setExternalId(String externalId) { this.externalId = externalId; }
+
+    public String getAppointmentId() { return this.appointmentId; }
+
+    public void setAppointmentId(String appointmentId) { this.appointmentId = appointmentId; }
+
+    public DateTime getAppointmentDate() { return this.appointmentDate; }
+
+    public void setAppointmentDate(DateTime appointmentDate) { this.appointmentDate = appointmentDate; }
+
+    public AppointmentStatus getFromStatus() { return this.fromStatus; }
+
+    public void setFromStatus(AppointmentStatus fromStatus) { this.fromStatus = fromStatus; }
+
+    public AppointmentStatus getToStatus() { return this.toStatus; }
+
+    public void setToStatus(AppointmentStatus toStatus) { this.toStatus = toStatus; }
 }

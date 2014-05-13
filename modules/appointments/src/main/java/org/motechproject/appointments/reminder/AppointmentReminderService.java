@@ -1,4 +1,4 @@
-package org.motechproject.appointments.external;
+package org.motechproject.appointments.reminder;
 
 import org.motechproject.scheduler.MotechSchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;

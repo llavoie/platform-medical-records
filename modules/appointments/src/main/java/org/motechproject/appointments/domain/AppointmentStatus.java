@@ -6,6 +6,7 @@ package org.motechproject.appointments.domain;
 public enum AppointmentStatus {
     NONE,
     MISSED,
+    UNSCHEDULED,
     VISITED,
     CONFIRMED,
     REMOVED,

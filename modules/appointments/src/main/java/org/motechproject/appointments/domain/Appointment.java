@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.motechproject.mds.annotations.Entity;
 
+import java.util.UUID;
+
 /**
  * Appointment class to track the appointments of a person with a given external Id
  */
@@ -36,6 +38,13 @@ public class Appointment {
 
     public Appointment() {
         this.externalId = "";
+        this.id = UUID.randomUUID().toString();
+        this.appointmentDate = null;
+        this.visitedDate = null;
+        this.status = AppointmentStatus.NONE;
+        this.sendReminders = false;
+        this.reminderInterval = null;
+        this.reminderStartTime = null;
     }
 
     // Getters & Setters

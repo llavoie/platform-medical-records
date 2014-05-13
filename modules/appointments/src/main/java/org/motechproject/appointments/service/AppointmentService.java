@@ -23,7 +23,7 @@ public interface AppointmentService {
      *
      * @param appointments list of appointment objects to remove
      */
-    List<Appointment> removeAppointments(List<Appointment> appointments);
+    void removeAppointments(List<Appointment> appointments);
 
     /**
      * Updates the list of appointments
@@ -53,7 +53,6 @@ public interface AppointmentService {
      *
      * @param externalId External id of the user
      * @param sendReminders boolean flag to start or stop reminders based on the appointment interval field
-     * @return
      */
-    boolean toggleReminders(String externalId, boolean sendReminders);
+    void toggleReminders(String externalId, boolean sendReminders);
 }

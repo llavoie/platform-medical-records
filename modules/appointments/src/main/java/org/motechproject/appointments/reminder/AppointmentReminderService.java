@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppointmentReminderService {
 
+    private static final String SUBJECT = "Appointment.Reminder";
     private MotechSchedulerService schedulerService;
+
 
     @Autowired
     public AppointmentReminderService(MotechSchedulerService schedulerService) {

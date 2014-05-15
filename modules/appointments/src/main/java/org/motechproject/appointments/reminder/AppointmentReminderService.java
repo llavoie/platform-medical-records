@@ -1,5 +1,6 @@
 package org.motechproject.appointments.reminder;
 
+import org.motechproject.appointments.domain.Appointment;
 import org.motechproject.scheduler.MotechSchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,5 +16,17 @@ public class AppointmentReminderService {
     @Autowired
     public AppointmentReminderService(MotechSchedulerService schedulerService) {
         this.schedulerService = schedulerService;
+    }
+
+    public void addReminders(Appointment appointment) {
+
+    }
+
+    public void removeReminders(Appointment appointment) {
+
+    }
+
+    public void updateReminders(Appointment appointment) {
+
     }
 }

@@ -21,8 +21,6 @@
         <property name="personAdapters" ref="personAdapterList"/>
     </bean>
 
-    <bean class="org.motechproject.event.listener.annotations.EventAnnotationBeanPostProcessor" />
-
     <bean id="moduleRegistrationData" class="org.motechproject.osgi.web.ModuleRegistrationData">
         <constructor-arg name="moduleName" value="mrs"/>
         <constructor-arg name="url" value="../mrs/resources/index.html"/>

@@ -24,8 +24,8 @@ public class AppointmentRecord {
     // Current appointment status to change to
     private AppointmentStatus toStatus;
 
-    public AppointmentRecord(String externalId, String appointmentId,
-                             DateTime appointmentDate, AppointmentStatus fromStatus, AppointmentStatus toStatus) {
+    public AppointmentRecord(String externalId, String appointmentId, DateTime appointmentDate,
+                             AppointmentStatus fromStatus, AppointmentStatus toStatus) {
         this.externalId = externalId;
         this.appointmentId = appointmentId;
         this.appointmentDate = appointmentDate;

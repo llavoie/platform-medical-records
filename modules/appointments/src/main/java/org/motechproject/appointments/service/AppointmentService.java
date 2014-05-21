@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Created by kosh on 5/7/14.
+ * AppointmentService interface to add/remove/update/find appointments
  */
 public interface AppointmentService {
 

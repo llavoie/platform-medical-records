@@ -1189,7 +1189,7 @@
         <module>modules/couchmrs/mrs-couchdb</module>
         <module>modules/mrs/api</module>
         <module>modules/openmrs/api</module>
-        <module>modules/openmrs/atomfeed</module>
+        <module>modules/openmrs/atom-feed</module>
         <module>modules/openmrs/domain-bundle</module>
         <module>modules/openmrs/ws</module>
     </modules>

@@ -10,7 +10,7 @@
     <bean class="org.motechproject.openmrs.atomfeed.PollingConfiguration" init-method="schedulePolling"
         destroy-method="unschedulePolling" />
 
-    <bean id="atomfeedSettings" class="org.motechproject.server.config.SettingsFacade">
+    <bean id="atomFeedSettings" class="org.motechproject.server.config.SettingsFacade">
         <property name="configFiles">
             <list>
                 <value>classpath:polling-config.properties</value>
@@ -22,14 +22,14 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="propertiesArray">
             <list>
-                <bean factory-bean="atomfeedSettings" factory-method="asProperties" />
+                <bean factory-bean="atomFeedSettings" factory-method="asProperties" />
             </list>
         </property>
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_NEVER" />
     </bean>
 
     <bean id="atomFeedCouchDbConnector" factory-bean="couchDbManager" factory-method="getConnector">
-        <constructor-arg value="motech-openmrs-atomfeed"/>
+        <constructor-arg value="motech-openmrs-atom-feed"/>
     </bean>
 
 </beans>

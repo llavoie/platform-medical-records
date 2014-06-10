@@ -1185,7 +1185,6 @@
         <module>modules/openmrs/omod</module>
 
         <!-- OSGI modules -->
-        <module>modules/appointments/api</module>
         <module>modules/mrs/api</module>
         <module>modules/openmrs/api</module>
         <module>modules/openmrs/atom-feed</module>

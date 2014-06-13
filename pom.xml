@@ -1181,10 +1181,6 @@
     </dependencyManagement>
 
     <modules>
-        <!-- Non-OSGI modules -->
-        <module>modules/openmrs/omod</module>
-
-        <!-- OSGI modules -->
         <module>modules/mrs/api</module>
         <module>modules/openmrs/api</module>
         <module>modules/openmrs/atom-feed</module>

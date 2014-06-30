@@ -1185,7 +1185,7 @@
         <module>modules/openmrs/api</module>
         <module>modules/openmrs/atom-feed</module>
         <module>modules/openmrs/domain-bundle</module>
-        <module>modules/openmrs/ws</module>
+        <module>modules/openmrs/web-services</module>
     </modules>
 
     <build>

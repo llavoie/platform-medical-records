@@ -5,32 +5,31 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="org.motechproject.openmrs" />
+    <context:component-scan base-package="org.motechproject.openmrs"/>
 
-    <bean id="openmrsWsSettings" class="org.motechproject.server.config.SettingsFacade" autowire="byType"
-        >
+    <bean id="openMrsWsSettings" class="org.motechproject.server.config.SettingsFacade" autowire="byType">
         <property name="configFiles">
             <list>
                 <value>classpath:openmrs.properties</value>
             </list>
         </property>
-        <property name="moduleName" value="openmrs-ws" />
+        <property name="moduleName" value="openmrs-ws"/>
     </bean>
 
-    <bean id="openMrshttpClient" init-method="readSettings" depends-on="openmrsWsSettings"
+    <bean id="openMrsHttpClient" init-method="readSettings" depends-on="openMrsWsSettings"
         class="org.motechproject.openmrs.ws.HttpClientFactoryBean">
-        <constructor-arg ref="openmrsWsSettings" />
+        <constructor-arg ref="openMrsWsSettings"/>
     </bean>
 
     <bean id="requestFactory" class="org.springframework.http.client.CommonsClientHttpRequestFactory">
-        <constructor-arg ref="openMrshttpClient" />
+        <constructor-arg ref="openMrsHttpClient"/>
     </bean>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <constructor-arg ref="requestFactory" />
+        <constructor-arg ref="requestFactory"/>
         <property name="messageConverters">
             <list>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
             </list>
         </property>
     </bean>

@@ -9,7 +9,7 @@
 
     <packaging>bundle</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>motech-openmrs-ws</artifactId>
+    <artifactId>motech-openmrs-web-services</artifactId>
     <name>MOTECH OpenMRS Web Services</name>
     <description>MOTECH interface to OpenMRS Web Services</description>
 
@@ -95,7 +95,7 @@
                             <excludeDefaultDirectories>true</excludeDefaultDirectories>
                             <filesets>
                                 <fileset>
-                                    <directory>${user.home}/.motech/config/org.motechproject.motech-openmrs-ws</directory>
+                                    <directory>${user.home}/.motech/config/org.motechproject.motech-openmrs-web-services</directory>
                                     <includes>
                                         <include>**/*</include>
                                     </includes>
@@ -117,9 +117,6 @@
                         <Export-Package>
                             !org.motechproject.openmrs.ws.*
                         </Export-Package>
-                        <Bundle-Activator>
-                            org.motechproject.openmrs.ws.osgi.Activator
-                        </Bundle-Activator>
                         <Import-Package>
                             org.motechproject.event.listener,
                             org.motechproject.event.listener.annotations,

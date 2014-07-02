@@ -15,11 +15,13 @@ import org.motechproject.openmrs.atomfeed.builder.PatientEvent;
 import org.motechproject.openmrs.atomfeed.model.Entry;
 import org.motechproject.openmrs.atomfeed.model.Feed;
 import org.motechproject.openmrs.atomfeed.model.Link;
-import org.motechproject.openmrs.atomfeed.repository.AtomFeedDao;
+import org.motechproject.openmrs.atomfeed.repository.AtomFeedUpdate;
 import org.motechproject.openmrs.atomfeed.service.AtomFeedService;
+import org.motechproject.openmrs.atomfeed.service.AtomFeedUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.jdo.annotations.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,13 +32,13 @@ public class AtomFeedServiceImpl implements AtomFeedService {
     private final OpenMrsHttpClient client;
     private final XStream xstream;
     private final EventRelay eventRelay;
-    private final AtomFeedDao atomFeedDao;
+    private AtomFeedUpdateService atomFeedUpdateService;
 
     @Autowired
-    public AtomFeedServiceImpl(OpenMrsHttpClient client, EventRelay eventRelay, AtomFeedDao atomFeedDao) {
+    public AtomFeedServiceImpl(OpenMrsHttpClient client, EventRelay eventRelay, AtomFeedUpdateService atomFeedUpdateService) {
         this.client = client;
         this.eventRelay = eventRelay;
-        this.atomFeedDao = atomFeedDao;
+        this.atomFeedUpdateService = atomFeedUpdateService;
 
         xstream = new XStream(new Xpp3Driver());
         xstream.setClassLoader(getClass().getClassLoader());
@@ -104,9 +106,15 @@ public class AtomFeedServiceImpl implements AtomFeedService {
             throw new MotechException("Problem processing an OpenMRS Atom Feed entry", e);
         } finally {
             if (StringUtils.isNotBlank(lastProcessedEntryUpdateTime)) {
-                atomFeedDao.setLastUpdateTime(lastProcessedId, lastProcessedEntryUpdateTime);
+                setLastUpdateTime(lastProcessedEntryUpdateTime,lastProcessedId);
             }
         }
+    }
+
+    private void setLastUpdateTime(String lastProcessedEntryUpdateTime,String lastProcessedId){
+        atomFeedUpdateService.deleteAll();
+        AtomFeedUpdate atomFeedUpdate = new AtomFeedUpdate(lastProcessedEntryUpdateTime,lastProcessedId);
+        atomFeedUpdateService.create(atomFeedUpdate);
     }
 
     private boolean matchesLastUpdatedEntry(Entry entry, String lastTimeUpdate, String lastId) {
@@ -160,10 +168,12 @@ public class AtomFeedServiceImpl implements AtomFeedService {
      * fetchOpenMrsChangesSinceLastUpdate()
      */
     @Override
+    @Transactional
     public void fetchOpenMrsChangesSinceLastUpdate() {
-        String lastUpdateTime = atomFeedDao.getLastUpdateTime();
-        String lastId = atomFeedDao.getLastId();
-        fetchOpenMrsChangesSince(lastUpdateTime, lastId);
+        List<AtomFeedUpdate> lastUpdateList  = atomFeedUpdateService.retrieveAll();
+        String lastUpdateTime = lastUpdateList.get(0).getLastUpdateTime();
+        String lastId = lastUpdateList.get(0).getLastId();
+        fetchOpenMrsChangesSince(lastUpdateTime,lastId);
     }
 
     /*

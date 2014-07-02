@@ -1,8 +1,7 @@
 package org.motechproject.openmrs.atomfeed.repository;
 
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.ektorp.support.TypeDiscriminator;
-import org.motechproject.commons.couchdb.model.MotechBaseDataObject;
+import org.motechproject.mds.annotations.Entity;
+import org.motechproject.mds.annotations.Field;
 
 /**
  * Represents a time when the OpenMRS Atom Feed was last updated. There should
@@ -11,15 +10,15 @@ import org.motechproject.commons.couchdb.model.MotechBaseDataObject;
  * it's possible 2 entities can be updated at the same time, but with different
  * ids.
  */
-@TypeDiscriminator("doc.type === 'AtomFeedUpdate'")
-public class AtomFeedUpdate extends MotechBaseDataObject {
+@Entity
+public class AtomFeedUpdate {
 
     private static final long serialVersionUID = -3867362351258037767L;
 
-    @JsonProperty
+    @Field
     private String lastUpdateTime;
 
-    @JsonProperty
+    @Field
     private String lastId;
 
     public AtomFeedUpdate() {
